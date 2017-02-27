@@ -6,7 +6,7 @@
 /*   By: cdrouet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/26 09:02:01 by cdrouet           #+#    #+#             */
-/*   Updated: 2015/11/27 16:34:08 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/02/27 10:59:39 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 char	*ft_strctrim(char const *s, char c)
 {
 	char			*ptr;
+	char			*tmp;
 	unsigned long	i;
 	unsigned long	j;
 
 	ptr = (char*)malloc(sizeof(char) * (ft_strlen(s) + 1));
+	tmp = NULL;
 	if (ptr)
 	{
 		i = 0;
@@ -32,8 +34,9 @@ char	*ft_strctrim(char const *s, char c)
 		j = ft_strlen(s) - 1;
 		while (s[j] == c)
 			j--;
-		ptr = ft_strsub(s, i, j - i + 1);
-		ptr[j - i + 1] = '\0';
+		tmp = ft_strsub(s, i, j - i + 1);
+		free(ptr);
+		tmp[j - i + 1] = '\0';
 	}
-	return (ptr);
+	return (tmp);
 }
