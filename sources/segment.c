@@ -6,13 +6,13 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/08 13:10:04 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/02/28 09:28:32 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/02/28 13:46:38 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	first_ca(t_pts d, t_pts start, t_pts stop, t_img *jpg)
+t_pts	first_ca(t_pts d, t_pts start, t_pts stop, char **map)
 {
 	int		e;
 
@@ -21,7 +21,7 @@ void	first_ca(t_pts d, t_pts start, t_pts stop, t_img *jpg)
 	d.y *= 2;
 	if (d.x >= d.y)
 	{
-		while (start.x != stop.x && write_img(start.y, start.x++, jpg))
+		while (start.x != stop.x && !verif_wall(start.x++, start.y, map))
 			if ((e -= d.y) < 0)
 			{
 				start.y++;
@@ -29,15 +29,16 @@ void	first_ca(t_pts d, t_pts start, t_pts stop, t_img *jpg)
 			}
 	}
 	else
-		while (start.y != stop.y && write_img(start.y++, start.x, jpg))
+		while (start.y != stop.y && !verif_wall(start.x, start.y++, map))
 			if ((e -= d.x) < 0)
 			{
 				start.x++;
 				e += d.y;
 			}
+	return (start);
 }
 
-void	last_ca(t_pts d, t_pts start, t_pts stop, t_img *jpg)
+t_pts	last_ca(t_pts d, t_pts start, t_pts stop, char **map)
 {
 	int		e;
 
@@ -46,7 +47,7 @@ void	last_ca(t_pts d, t_pts start, t_pts stop, t_img *jpg)
 	d.y *= 2;
 	if (d.x >= -d.y)
 	{
-		while (start.x != stop.x && write_img(start.y, start.x++, jpg))
+		while (start.x != stop.x && !verif_wall(start.x++, start.y, map))
 			if ((e += d.y) < 0)
 			{
 				start.y--;
@@ -54,15 +55,16 @@ void	last_ca(t_pts d, t_pts start, t_pts stop, t_img *jpg)
 			}
 	}
 	else
-		while (start.y != stop.y && write_img(start.y--, start.x, jpg))
+		while (start.y != stop.y && !verif_wall(start.x, start.y--, map))
 			if ((e += d.x) > 0)
 			{
 				start.x++;
 				e += d.y;
 			}
+	return (start);
 }
 
-void	second_ca(t_pts d, t_pts start, t_pts stop, t_img *jpg)
+t_pts	second_ca(t_pts d, t_pts start, t_pts stop, char **map)
 {
 	int		e;
 
@@ -71,7 +73,7 @@ void	second_ca(t_pts d, t_pts start, t_pts stop, t_img *jpg)
 	d.y *= 2;
 	if (-d.x >= d.y)
 	{
-		while (start.x != stop.x && write_img(start.y, start.x--, jpg))
+		while (start.x != stop.x && !verif_wall(start.x--, start.y, map))
 			if ((e += d.y) >= 0)
 			{
 				start.y++;
@@ -79,15 +81,16 @@ void	second_ca(t_pts d, t_pts start, t_pts stop, t_img *jpg)
 			}
 	}
 	else
-		while (start.y != stop.y && write_img(start.y++, start.x, jpg))
+		while (start.y != stop.y && !verif_wall(start.x, start.y++, map))
 			if ((e += d.x) <= 0)
 			{
 				start.x--;
 				e += d.y;
 			}
+	return (start);
 }
 
-void	third_ca(t_pts d, t_pts start, t_pts stop, t_img *jpg)
+t_pts	third_ca(t_pts d, t_pts start, t_pts stop, char **map)
 {
 	int		e;
 
@@ -96,7 +99,7 @@ void	third_ca(t_pts d, t_pts start, t_pts stop, t_img *jpg)
 	d.y *= 2;
 	if (d.x <= d.y)
 	{
-		while (start.x != stop.x && write_img(start.y, start.x--, jpg))
+		while (start.x != stop.x && !verif_wall(start.x--, start.y, map))
 			if ((e -= d.y) >= 0)
 			{
 				start.y--;
@@ -104,31 +107,35 @@ void	third_ca(t_pts d, t_pts start, t_pts stop, t_img *jpg)
 			}
 	}
 	else
-		while (start.y != stop.y && write_img(start.y--, start.x, jpg))
+		while (start.y != stop.y && !verif_wall(start.x, start.y--, map))
 			if ((e -= d.x) >= 0)
 			{
 				start.x--;
 				e += d.y;
 			}
+	return (start);
 }
 
-void	trace_segment(t_pts start, t_pts stop, t_img *jpg)
+t_pts	trace_segment(t_pts start, t_pts stop, char **map)
 {
 	t_pts	d;
 
 	d.x = stop.x - start.x;
 	d.y = stop.y - start.y;
 	if (d.x > 0)
-		d_x_pos(d, start, stop, jpg);
+		return d_x_pos(d, start, stop, map);
 	else if (d.x < 0)
-		d_x_neg(d, start, stop, jpg);
+		return d_x_neg(d, start, stop, map);
 	else
 	{
 		if (d.y > 0)
-			while (start.y != stop.y)
-				write_img(start.y++, start.x, jpg);
+			while (start.y != stop.y && !verif_wall(start.x, start.y, map))
+				start.y++;
 		else if (d.y < 0)
-			while (start.y != stop.y)
-				write_img(start.y--, start.x, jpg);
+			while (start.y != stop.y && !verif_wall(start.x, start.y, map))
+				start.y--;
 	}
+	d.x = start.x;
+	d.y = start.y;
+	return (d);
 }

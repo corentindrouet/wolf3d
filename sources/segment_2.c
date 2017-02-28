@@ -6,30 +6,37 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 14:17:02 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/02/12 14:22:50 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/02/28 13:41:46 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	d_x_pos(t_pts d, t_pts start, t_pts stop, t_img *jpg)
+int		verif_wall(int x, int y, char **map)
 {
-	if (d.y > 0)
-		first_ca(d, start, stop, jpg);
-	else if (d.y < 0)
-		last_ca(d, start, stop, jpg);
-	else
-		while (start.x != stop.x)
-			write_img(start.y, start.x++, jpg);
+	return (map[pt.y / 64][pt.x / 64] - '0');
 }
 
-void	d_x_neg(t_pts d, t_pts start, t_pts stop, t_img *jpg)
+t_pts	d_x_pos(t_pts d, t_pts start, t_pts stop, char **map)
 {
 	if (d.y > 0)
-		second_ca(d, start, stop, jpg);
+		return first_ca(d, start, stop, map);
 	else if (d.y < 0)
-		third_ca(d, start, stop, jpg);
+		return last_ca(d, start, stop, map);
 	else
-		while (start.x != stop.x)
-			write_img(start.y, start.x--, jpg);
+		while (start.x != stop.x && !verif_wall(start.x, start.y, map))
+			start.x++;
+	return start;
+}
+
+t_pts	d_x_neg(t_pts d, t_pts start, t_pts stop, char **map)
+{
+	if (d.y > 0)
+		return second_ca(d, start, stop, map);
+	else if (d.y < 0)
+		return third_ca(d, start, stop, map);
+	else
+		while (start.x != stop.x && !verif_wall(start.x, start.y, map))
+			start.x--;
+	return start;
 }
