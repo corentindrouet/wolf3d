@@ -6,7 +6,7 @@
 #    By: mdugot <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 12:08:51 by mdugot            #+#    #+#              #
-#    Updated: 2017/02/23 14:24:27 by cdrouet          ###   ########.fr        #
+#    Updated: 2017/02/28 15:03:59 by cdrouet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,11 @@ NAME= wolf3d
 CC= clang
 CFLAGS= -Wall -Werror -Wextra
 SRC_NAME= main.c \
-		  mlx_img_manager.c
+		  mlx_img_manager.c \
+		  game.c \
+		  raycasting.c \
+		  segment.c \
+		  segment_2.c
 SRC_PATH= ./sources/
 INC_PATH= ./includes/
 LIB_NAME= libft_printf.a

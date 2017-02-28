@@ -6,11 +6,12 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:20:41 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/02/28 14:04:39 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/02/28 15:56:02 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+#include <stdio.h>
 
 t_mlx_img	*new_image(void *mlx, int x, int y)
 {

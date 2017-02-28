@@ -6,11 +6,11 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/08 13:10:04 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/02/28 13:46:38 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/02/28 15:35:19 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "wolf3d.h"
 
 t_pts	first_ca(t_pts d, t_pts start, t_pts stop, char **map)
 {
@@ -135,7 +135,5 @@ t_pts	trace_segment(t_pts start, t_pts stop, char **map)
 			while (start.y != stop.y && !verif_wall(start.x, start.y, map))
 				start.y--;
 	}
-	d.x = start.x;
-	d.y = start.y;
-	return (d);
+	return (start);
 }

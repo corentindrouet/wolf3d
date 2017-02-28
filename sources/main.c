@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/02/27 12:45:14 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/02/28 15:04:27 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ int			main(void)
 
 	map = read_map();
 	init_mlx_window(&game);
-	start_game(*game, map);
+	start_game(&game, map);
 	mlx_hook(game.win, 2, 0, keypress, &game);
 	mlx_loop(game.mlx);
 	return (0);

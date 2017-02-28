@@ -6,15 +6,18 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/12 14:17:02 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/02/28 13:41:46 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/02/28 15:39:33 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fdf.h"
+#include "wolf3d.h"
 
 int		verif_wall(int x, int y, char **map)
 {
-	return (map[pt.y / 64][pt.x / 64] - '0');
+	if ((y / 64) >= tab_len(map) || (y / 64) < 0 ||
+			(x / 64) >= (int)ft_strlen(map[0]) || (x / 64) < 0)
+		return (0);
+	return (map[y / 64][x / 64] - '0');
 }
 
 t_pts	d_x_pos(t_pts d, t_pts start, t_pts stop, char **map)
