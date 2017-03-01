@@ -6,20 +6,51 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/01 11:23:05 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/01 16:08:52 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include <stdio.h>
 
-static int	keypress(int keycode, t_mlx *param)
+static int	keypress(int keycode, t_all *param)
 {
+	int	i;
+
 	if (keycode == 53)
 	{
-		mlx_destroy_window(param->mlx, param->win);
+		mlx_destroy_window(param->mlx->mlx, param->mlx->win);
+		mlx_destroy_image(param->mlx->mlx, param->img->img);
+		free(param->mlx->mlx);
 		free(param->mlx);
+		free(param->player);
+		i = 0;
+		while (param->map[i])
+			free(param->map[i++]);
+		free(param->map);
 		exit(0);
+	}
+	if (keycode == 123)
+	{
+		ft_bzero(param->img->str_img, param->mlx->win_size.y * param->img->size_line);
+		param->player->angle++;
+		if (param->player->angle >= 360)
+			param->player->angle = 0;
+		print_wall_to_img(param->img, param);
+		mlx_clear_window(param->mlx->mlx, param->mlx->win);
+		mlx_put_image_to_window(param->mlx->mlx, param->mlx->win,
+				param->img->img, 0, 0);
+	}
+	if (keycode == 124)
+	{
+		ft_bzero(param->img->str_img, param->mlx->win_size.y * param->img->size_line);
+		param->player->angle--;
+		if (param->player->angle < 0)
+			param->player->angle = 359;
+		print_wall_to_img(param->img, param);
+		mlx_clear_window(param->mlx->mlx, param->mlx->win);
+		mlx_put_image_to_window(param->mlx->mlx, param->mlx->win,
+				param->img->img, 0, 0);
 	}
 	return (0);
 }
@@ -29,8 +60,8 @@ static void	init_mlx_window(t_mlx *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		exit(0);
-	game->win_size.x = 1920;
-	game->win_size.y = 1080;
+	game->win_size.x = 320;
+	game->win_size.y = 200;
 	game->win = mlx_new_window(game->mlx, game->win_size.x,
 			game->win_size.y, "wolf3d");
 	if (!game->win)
@@ -82,13 +113,13 @@ static char	**read_map(void)
 
 int			main(void)
 {
-	t_mlx		game;
-	char		**map;
+	t_all		all_structs;
 
-	map = read_map();
-	init_mlx_window(&game);
-	start_game(&game, map);
-	mlx_hook(game.win, 2, 0, keypress, &game);
-	mlx_loop(game.mlx);
+	all_structs.map = read_map();
+	all_structs.mlx = malloc(sizeof(t_mlx));
+	init_mlx_window(all_structs.mlx);
+	start_game(&all_structs);
+	mlx_hook(all_structs.mlx->win, 2, 0, keypress, &all_structs);
+	mlx_loop(all_structs.mlx->mlx);
 	return (0);
 }

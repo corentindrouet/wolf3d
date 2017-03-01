@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/02/28 15:04:48 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/01 16:07:35 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,21 @@ typedef struct	s_mlx_img
 typedef struct	s_player
 {
 	t_pts		pos;
-	short		angle;
+	double		angle;
 }				t_player;
+
+typedef struct	s_all
+{
+	t_mlx		*mlx;
+	t_mlx_img	*img;
+	t_player	*player;
+	char		**map;
+}				t_all;
 
 t_mlx_img		*new_image(void *mlx, int x, int y);
 int				write_img(int x, int y, t_mlx_img *img, int color);
-void			start_game(t_mlx *game, char **map);
-t_mlx_img		*raycast(t_mlx *game, char **map, t_player *player);
+void			start_game(t_all *all_structs);
+t_mlx_img		*raycast(t_all *all_structs);
 int				tab_len(char **tab);
 t_pts			trace_segment(t_pts start, t_pts stop, char **map);
 t_pts			third_ca(t_pts d, t_pts start, t_pts stop, char **map);
@@ -61,5 +69,6 @@ t_pts			first_ca(t_pts d, t_pts start, t_pts stop, char **map);
 t_pts			d_x_pos(t_pts d, t_pts start, t_pts stop, char **map);
 t_pts			d_x_neg(t_pts d, t_pts start, t_pts stop, char **map);
 int				verif_wall(int x, int y, char **map);
+void			print_wall_to_img(t_mlx_img *img, t_all *all);
 
 #endif
