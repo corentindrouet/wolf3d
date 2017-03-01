@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 12:48:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/02/28 15:57:27 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/01 09:46:44 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ static void	init_player(char **map, t_player *player)
 			break ;
 		i++;
 	}
-	player->pos.x = ((tmp - map[i]) * 64) + 32;
-	player->pos.y = (i * 64) + 32;
+	player->pos.x = ((tmp - map[i]) * 64) + 31;
+	player->pos.y = (i * 64) + 31;
 	*tmp = '0';
 	player->angle = 0;
 }
@@ -38,4 +38,6 @@ void		start_game(t_mlx *game, char **map)
 	init_player(map, &player);
 	img = raycast(game, map, &player);
 	mlx_put_image_to_window(game->mlx, game->win, img->img, 0, 0);
+	mlx_destroy_image(game->mlx, img->img);
+	free(img);
 }

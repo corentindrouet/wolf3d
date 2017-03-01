@@ -6,11 +6,12 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/02/08 13:10:04 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/02/28 15:35:19 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/01 11:14:27 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+#include <stdio.h>
 
 t_pts	first_ca(t_pts d, t_pts start, t_pts stop, char **map)
 {
@@ -55,12 +56,14 @@ t_pts	last_ca(t_pts d, t_pts start, t_pts stop, char **map)
 			}
 	}
 	else
+	{
 		while (start.y != stop.y && !verif_wall(start.x, start.y--, map))
 			if ((e += d.x) > 0)
 			{
 				start.x++;
 				e += d.y;
 			}
+	}
 	return (start);
 }
 
@@ -123,9 +126,9 @@ t_pts	trace_segment(t_pts start, t_pts stop, char **map)
 	d.x = stop.x - start.x;
 	d.y = stop.y - start.y;
 	if (d.x > 0)
-		return d_x_pos(d, start, stop, map);
+		d = d_x_pos(d, start, stop, map);
 	else if (d.x < 0)
-		return d_x_neg(d, start, stop, map);
+		d = d_x_neg(d, start, stop, map);
 	else
 	{
 		if (d.y > 0)
@@ -134,6 +137,7 @@ t_pts	trace_segment(t_pts start, t_pts stop, char **map)
 		else if (d.y < 0)
 			while (start.y != stop.y && !verif_wall(start.x, start.y, map))
 				start.y--;
+		d = start;
 	}
-	return (start);
+	return (d);
 }

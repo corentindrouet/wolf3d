@@ -6,11 +6,12 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/02/28 15:04:27 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/01 11:23:05 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+#include <stdio.h>
 
 static int	keypress(int keycode, t_mlx *param)
 {
@@ -28,14 +29,15 @@ static void	init_mlx_window(t_mlx *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		exit(0);
-	game->win = mlx_new_window(game->mlx, 320, 200, "wolf3d");
+	game->win_size.x = 1920;
+	game->win_size.y = 1080;
+	game->win = mlx_new_window(game->mlx, game->win_size.x,
+			game->win_size.y, "wolf3d");
 	if (!game->win)
 	{
 		free(game->mlx);
 		exit(0);
 	}
-	game->win_size.x = 320;
-	game->win_size.y = 200;
 }
 
 static void	concat(char *buff, char **str)
@@ -56,19 +58,23 @@ static void	concat(char *buff, char **str)
 static char	**read_map(void)
 {
 	int		fd;
-	char	buff[256];
+	char	buff[257];
 	int		ret;
 	char	*str;
 	char	**splited;
 
-	fd = open("map.map", O_RDONLY);
+	buff[256] = '\0';
+	fd = open("map1.map", O_RDONLY);
 	if (fd < 0)
 		exit(0);
 	ret = 256;
 	str = NULL;
 	while (ret == 256)
+	{
+		ft_bzero(buff, 256);
 		if ((ret = read(fd, buff, 256)) >= 0)
 			concat(buff, &str);
+	}
 	splited = ft_strsplit(str, '\n');
 	free(str);
 	return (splited);

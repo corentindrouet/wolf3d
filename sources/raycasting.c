@@ -6,11 +6,12 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/02/28 15:57:27 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/01 11:22:30 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+#include <stdio.h>
 
 static void		write_column(t_mlx *game, t_mlx_img *img, int dist, int x)
 {
@@ -20,6 +21,7 @@ static void		write_column(t_mlx *game, t_mlx_img *img, int dist, int x)
 
 	cam_proj_dist = (double)(game->win_size.x / 2) / tan((30 * M_PI) / 180);
 	col_len = (cam_proj_dist * 64) / dist;
+//	printf("dist = %d ; col_len = %d\n", dist, col_len);
 	i = 0;
 	while (i < game->win_size.y)
 	{
@@ -43,16 +45,16 @@ static t_pts	search_stop_pos(double angle, char **map, t_player *player)
 	*calcul = (((angle < 45 || angle >= 315) || (angle >= 135 && angle < 225)) ?
 			player->pos.y : player->pos.x) +
 			(((((angle < 45 || angle >= 315) || (angle >= 135 && angle < 225)) ?
-			((ft_strlen(map[0]) * 64) - player->pos.y) :
-			((tab_len(map) * 64) - player->pos.x)) /
-			sin(((180 - (90 + angle)) * M_PI) / 180)) *
-			sin((angle * M_PI) / 180));
+			(((ft_strlen(map[0]) - 1) * 64) - player->pos.y) :
+			(((tab_len(map) - 1) * 64) - player->pos.x)) /
+			sin((double)((double)(180 - (double)(90 + (double)angle)) * M_PI) / 180)) *
+			sin((double)((double)angle * M_PI) / 180));
 	if (angle < 45 || angle >= 315)
-		*pos = ft_strlen(map[0]) * 64;
+		*pos = (ft_strlen(map[0]) - 1) * 64;
 	else if ((angle >= 45 && angle < 225))
 		*pos = 0;
 	else if (angle >= 225 && angle < 315)
-		*pos = tab_len(map) * 64;
+		*pos = (tab_len(map) - 1) * 64;
 	return (ret);
 }
 
@@ -74,12 +76,11 @@ static void		print_wall_to_img(t_mlx_img *img, char **map, t_player *player,
 		if (d_angle < 0)
 			d_angle = 360 + d_angle;
 		stop = search_stop_pos(d_angle, map, player);
+//		printf("stop.x %d ; stop.y %d ; ", stop.x, stop.y);
 		stop = trace_segment(player->pos, stop, map);
-		write_column(game, img, hypot((player->pos.x > stop.x) ?
-					player->pos.x - stop.x : stop.x - player->pos.x,
-					(player->pos.y > stop.y) ?
-					player->pos.y - stop.y : stop.y - player->pos.y) *
-				cos((d_angle * M_PI) / 180), nb_col);
+//		printf("stop.x %d ; stop.y %d ; ", stop.x / 64, stop.y / 64);
+		write_column(game, img, hypot(stop.x - player->pos.x, stop.y - player->pos.y) *
+					cos((double)((double)d_angle * M_PI) / 180), game->win_size.x - nb_col);
 		nb_col--;
 	}
 }
