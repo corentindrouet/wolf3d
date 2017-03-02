@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/01 16:07:35 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/02 09:14:51 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,6 @@ t_pts			d_x_pos(t_pts d, t_pts start, t_pts stop, char **map);
 t_pts			d_x_neg(t_pts d, t_pts start, t_pts stop, char **map);
 int				verif_wall(int x, int y, char **map);
 void			print_wall_to_img(t_mlx_img *img, t_all *all);
+t_pts			search_pts_in_space(t_all *all, double angle, double uncorrect);
 
 #endif

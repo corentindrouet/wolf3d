@@ -6,7 +6,7 @@
 #    By: mdugot <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 12:08:51 by mdugot            #+#    #+#              #
-#    Updated: 2017/02/28 15:03:59 by cdrouet          ###   ########.fr        #
+#    Updated: 2017/03/02 09:15:10 by cdrouet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,8 @@ SRC_NAME= main.c \
 		  game.c \
 		  raycasting.c \
 		  segment.c \
-		  segment_2.c
+		  segment_2.c \
+		  search_pt_segment.c
 SRC_PATH= ./sources/
 INC_PATH= ./includes/
 LIB_NAME= libft_printf.a

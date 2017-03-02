@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 12:48:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/01 16:28:05 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/02 10:36:24 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	init_player(char **map, t_player *player)
 	player->pos.x = ((tmp - map[i]) * 64) + 31;
 	player->pos.y = (i * 64) + 31;
 	*tmp = '0';
-	player->angle = 45;
+	player->angle = 0;
 }
 
 void		start_game(t_all *all_structs)
