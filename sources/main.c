@@ -6,12 +6,11 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/02 16:04:55 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/02 16:17:12 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <stdio.h>
 
 static int	keypress(int keycode, t_all *param)
 {
@@ -95,7 +94,7 @@ static char	**read_map(void)
 	char	**splited;
 
 	buff[256] = '\0';
-	fd = open("map1.map", O_RDONLY);
+	fd = open("map.map", O_RDONLY);
 	if (fd < 0)
 		exit(0);
 	ret = 256;
