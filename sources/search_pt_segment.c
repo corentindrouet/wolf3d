@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 08:12:05 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/02 13:21:34 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/02 15:47:05 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,18 @@ int				verif_wall(int x, int y, char **map)
 	return (map[y / 64][x / 64] - '0');
 }
 
-static t_pts	horizontal_search(t_all *all, double angle, double uncorrected_angle)
+static t_pts	horizontal_search(t_all *all, double angle)
 {
 	t_pts	intersection;
 	int		xa;
 	int		ya;
-	double	triangle_angle;
 
-	triangle_angle = fabs(fabs(uncorrected_angle) - fabs(all->player->angle));
 	intersection.y = ((int)(all->player->pos.y / 64) * 64) +
 		((angle >= 0 && angle < 180) ?  -1 : 64);
 	intersection.x = all->player->pos.x + ((all->player->pos.y - intersection.y)
 		/ tan((angle * M_PI) / 180));
 	ya = (angle >= 0 && angle < 180 ) ? -64 : 64;
-	xa = 64 / tan((angle * M_PI) / 180);
+	xa = ((angle >= 180) ? -1 : 1) * (64 / tan((angle * M_PI) / 180));
 	while (intersection.y >= 0 && intersection.y < (tab_len(all->map) * 64)
 		&& intersection.x >= 0 && intersection.x < (int)(ft_strlen(all->map[0]) * 64)
 		&& !verif_wall(intersection.x, intersection.y, all->map))
@@ -45,20 +43,18 @@ static t_pts	horizontal_search(t_all *all, double angle, double uncorrected_angl
 	return (intersection);
 }
 
-static t_pts	vertical_search(t_all *all, double angle, double uncorrected_angle)
+static t_pts	vertical_search(t_all *all, double angle)
 {
 	t_pts	intersection;
 	int		xa;
 	int		ya;
-	double	triangle_angle;
 
-	triangle_angle = fabs(fabs(uncorrected_angle) - fabs(all->player->angle));
 	intersection.x = ((int)(all->player->pos.x / 64) * 64) +
 		((angle >= 90 && angle < 270) ?  -1 : 64);
 	intersection.y = all->player->pos.y + ((all->player->pos.x - intersection.x)
-		/ tan((angle * M_PI) / 180));
+		* tan((angle * M_PI) / 180));
 	xa = (angle >= 90 && angle < 270 ) ? -64 : 64;
-	ya = 64 * tan((angle * M_PI) / 180);
+	ya = ((angle >= 90 && angle < 270) ? 1 : -1) * (64 * tan((angle * M_PI) / 180));
 	while (intersection.y >= 0 && intersection.y < (tab_len(all->map) * 64)
 		&& intersection.x >= 0 && intersection.x < (int)(ft_strlen(all->map[0]) * 64)
 		&& !verif_wall(intersection.x, intersection.y, all->map))
@@ -69,27 +65,36 @@ static t_pts	vertical_search(t_all *all, double angle, double uncorrected_angle)
 	return (intersection);
 }
 
-t_pts			search_pts_in_space(t_all *all, double angle, double uncorrect)
+double			search_pts_in_space(t_all *all, double angle)
 {
 	t_pts	a;
 	t_pts	b;
 	double	pa;
 	double	pb;
 
-//	printf("player.x %d %d ; player.y %d %d\n", all->player->pos.x, all->player->pos.x / 64,
-//			all->player->pos.y, all->player->pos.y / 64);
-//	printf("angle %f ; uncorrect %f\n", angle, uncorrect);
+	pa = 0;
+	pb = 0;
 	if (angle != 180 && angle != 0)
-		a = horizontal_search(all, angle, uncorrect);
+	{
+		a = horizontal_search(all, angle);
+		pa = hypot(all->player->pos.x - a.x, all->player->pos.y - a.y);
+	}
 	if (angle != 90 && angle != 270)
-		b = vertical_search(all, angle, uncorrect);
-	if (angle == 180  || angle == 0)
-		return (b);
-	if (angle == 270 || angle == 90)
-		return (a);
-	pa = abs(all->player->pos.x - a.x) / cos((angle * M_PI) / 180);
-	pb = abs(all->player->pos.x - b.x) / cos((angle * M_PI) / 180);
-//	printf("\na.x %d %d ; a.y %d %d\nb.x %d %d ; b.y %d %d\n", a.x, a.x / 64, a.y, a.y / 64, b.x, b.x / 64, b.y, b.y / 64);
-//	printf("\npa %f ; pb %f\n", pa, pb);
-	return ((pa > pb) ? b : a);
+	{
+		b = vertical_search(all, angle);
+		pb = hypot(all->player->pos.x - b.x, all->player->pos.y - b.y);
+	}
+	if (angle == 180  || angle == 0 || a.x < 0 || a.y < 0
+			|| a.x >= (int)(ft_strlen(all->map[0]) * 64)
+			|| a.y >= (tab_len(all->map) * 64)
+			|| ((angle >= 90 && angle < 270) ? a.x > all->player->pos.x : a.x < all->player->pos.x)
+			|| ((angle >= 0 && angle < 180) ? a.y > all->player->pos.y : a.y < all->player->pos.y))
+		return (pb);
+	if (angle == 270 || angle == 90 || b.x < 0 || b.y < 0
+			|| b.x >= (int)(ft_strlen(all->map[0]) * 64)
+			|| b.y >= (tab_len(all->map) * 64)
+			|| ((angle >= 90 && angle < 270) ? b.x > all->player->pos.x : b.x < all->player->pos.x)
+			|| ((angle >= 0 && angle < 180) ? b.y > all->player->pos.y : b.y < all->player->pos.y))
+		return (pa);
+	return ((pa > pb) ? pb : pa);
 }

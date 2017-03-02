@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/01 16:08:52 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/02 15:47:38 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ static void	init_mlx_window(t_mlx *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		exit(0);
-	game->win_size.x = 320;
-	game->win_size.y = 200;
+	game->win_size.x = 1920;
+	game->win_size.y = 1080;
 	game->win = mlx_new_window(game->mlx, game->win_size.x,
 			game->win_size.y, "wolf3d");
 	if (!game->win)
