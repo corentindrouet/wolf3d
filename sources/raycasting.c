@@ -6,29 +6,30 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/02 15:46:38 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/02 16:04:50 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
 #include <stdio.h>
 
-static void		write_column(t_mlx *game, t_mlx_img *img, int dist, int x)
+static void		write_column(t_mlx *game, t_mlx_img *img, double dist, int x)
 {
 	int		i;
 	int		col_len;
 	double	cam_proj_dist;
+	int		n;
 
 	cam_proj_dist = (double)(game->win_size.x / 2) / tan((30 * M_PI) / 180);
-	col_len = (cam_proj_dist * 64) / dist;
-	i = 0;
-	while (i < game->win_size.y)
-	{
-		if (i > ((game->win_size.y - col_len) / 2) &&
-			i < (((game->win_size.y - col_len) / 2) + col_len))
-			write_img(x, i, img, (int)0x0000FF00);
-		i++;
-	}
+	col_len = (int)((cam_proj_dist * 64) / dist);
+	i = game->win_size.y / 2;
+	n = i - (col_len / 2);
+	while (i > n)
+		write_img(x, i--, img, (int)0x0000FF00);
+	i = game->win_size.y / 2;
+	n = i + (col_len / 2);
+	while (i < n)
+		write_img(x, i++, img, (int)0x0000FF00);
 }
 
 double			angle_beta(double angle, t_player *player)
