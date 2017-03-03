@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/03 15:10:24 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/03 15:11:58 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ double			angle_beta(double angle, t_player *player)
 		return (angle - (player->angle + 360));
 	if (player->angle > 329 && angle < 29)
 		angle += player->angle;
-	return (angle - player->angle);
+	return (angle - (double)player->angle);
 }
 
 void			print_wall_to_img(t_all *all)
