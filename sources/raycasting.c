@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/03 11:43:25 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/03 14:57:45 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int		choose_color(double angle, short wall_direction)
 	}
 	if (angle >= 90 && angle < 270)
 		return ((int)0x00FF0000);
-	return ((int) 0x00FFFFFF);
+	return ((int)0x00FFFFFF);
 }
 
 static void		write_column(t_all *all, int dist, int x, int color)
@@ -34,8 +34,8 @@ static void		write_column(t_all *all, int dist, int x, int color)
 	double	cam_proj_dist;
 	int		n;
 
-	cam_proj_dist = round((all->mlx->win_size.x / 2) / tan((30 * M_PI) / 180));
-	col_len = round((cam_proj_dist * 64) / dist);
+	cam_proj_dist = round((all->mlx->win_size.x / 2) / tan(RAD(30)));
+	col_len = round((cam_proj_dist * BLOCK_SIZE) / dist);
 	i = all->mlx->win_size.y / 2;
 	n = i - (col_len / 2);
 	while (i > n)
@@ -61,33 +61,27 @@ double			angle_beta(double angle, t_player *player)
 
 void			print_wall_to_img(t_all *all)
 {
-	t_pts		angle;
+	double		angle;
 	int			nb_col;
 	double		d_angle;
 	double		res;
 	short		wall_direction;
 
-	angle.x = all->player->angle + 30 - ((all->player->angle >= 330) ? 360 : 0);
-	angle.y = all->player->angle - 30 + ((all->player->angle < 30) ? 360 : 0);
+	angle = all->player->angle + 30 - ((all->player->angle >= 330) ? 360 : 0);
 	nb_col = all->mlx->win_size.x;
 	while (nb_col > 0)
 	{
-		d_angle = (double)angle.x - ((double)(60 / (double)all->mlx->win_size.x)
+		d_angle = (double)angle - ((double)(60 / (double)all->mlx->win_size.x)
 				* (double)((double)all->mlx->win_size.x - nb_col));
 		if (d_angle < 0)
 			d_angle = 360 + d_angle;
 		res = search_pts_in_space(all, d_angle);
-		wall_direction = 0;
+		wall_direction = (res < 0) ? 1 : 0;
 		if (res < 0)
-		{
-			wall_direction = 1;
 			res *= -1;
-		}
-		else
-			printf("  NOT pa");
-		printf("\n");
-		write_column(all, round(res * cos((angle_beta(d_angle, all->player)
-			* M_PI) / 180)), all->mlx->win_size.x - nb_col, choose_color(d_angle, wall_direction));
+		write_column(all, round(res * cos(RAD(angle_beta(d_angle,
+					all->player)))), all->mlx->win_size.x - nb_col,
+					choose_color(d_angle, wall_direction));
 		nb_col--;
 	}
 }

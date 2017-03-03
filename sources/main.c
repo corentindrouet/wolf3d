@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/03 08:54:51 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/03 13:20:43 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static int	keypress(int keycode, t_all *param)
 	}
 	if (keycode == 123)
 	{
-		ft_bzero(param->img->str_img, param->mlx->win_size.y * param->img->size_line);
+		ft_bzero(param->img->str_img,
+				param->mlx->win_size.y * param->img->size_line);
 		param->player->angle++;
 		if (param->player->angle >= 360)
 			param->player->angle = 0;
@@ -42,7 +43,8 @@ static int	keypress(int keycode, t_all *param)
 	}
 	if (keycode == 124)
 	{
-		ft_bzero(param->img->str_img, param->mlx->win_size.y * param->img->size_line);
+		ft_bzero(param->img->str_img,
+				param->mlx->win_size.y * param->img->size_line);
 		param->player->angle--;
 		if (param->player->angle < 0)
 			param->player->angle = 359;

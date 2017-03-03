@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/03 08:53:09 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/03 14:55:44 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,19 @@
 # include "mlx.h"
 # include "libft.h"
 # define BLOCK_SIZE 64
+# define RAD(x) ((x * M_PI) / 180)
 
 typedef struct	s_pts
 {
 	int			x;
 	int			y;
 }				t_pts;
+
+typedef struct	s_double_pts
+{
+	double		x;
+	double		y;
+}				t_double_pts;
 
 typedef struct	s_mlx
 {
