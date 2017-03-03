@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/02 16:17:12 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/03 08:54:51 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static int	keypress(int keycode, t_all *param)
 		param->player->angle++;
 		if (param->player->angle >= 360)
 			param->player->angle = 0;
-		print_wall_to_img(param->img, param);
+		print_wall_to_img(param);
 		mlx_clear_window(param->mlx->mlx, param->mlx->win);
 		mlx_put_image_to_window(param->mlx->mlx, param->mlx->win,
 				param->img->img, 0, 0);
@@ -46,7 +46,7 @@ static int	keypress(int keycode, t_all *param)
 		param->player->angle--;
 		if (param->player->angle < 0)
 			param->player->angle = 359;
-		print_wall_to_img(param->img, param);
+		print_wall_to_img(param);
 		mlx_clear_window(param->mlx->mlx, param->mlx->win);
 		mlx_put_image_to_window(param->mlx->mlx, param->mlx->win,
 				param->img->img, 0, 0);
@@ -59,8 +59,8 @@ static void	init_mlx_window(t_mlx *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		exit(0);
-	game->win_size.x = 320;
-	game->win_size.y = 200;
+	game->win_size.x = 640;
+	game->win_size.y = 400;
 	game->win = mlx_new_window(game->mlx, game->win_size.x,
 			game->win_size.y, "wolf3d");
 	if (!game->win)
@@ -94,7 +94,7 @@ static char	**read_map(void)
 	char	**splited;
 
 	buff[256] = '\0';
-	fd = open("map.map", O_RDONLY);
+	fd = open("map1.map", O_RDONLY);
 	if (fd < 0)
 		exit(0);
 	ret = 256;

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/02 14:06:40 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/03 08:53:09 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,10 @@ typedef struct	s_all
 t_mlx_img		*new_image(void *mlx, int x, int y);
 int				write_img(int x, int y, t_mlx_img *img, int color);
 void			start_game(t_all *all_structs);
-t_mlx_img		*raycast(t_all *all_structs);
+void			raycast(t_all *all_structs);
 int				tab_len(char **tab);
 int				verif_wall(int x, int y, char **map);
-void			print_wall_to_img(t_mlx_img *img, t_all *all);
+void			print_wall_to_img(t_all *all);
 double			search_pts_in_space(t_all *all, double angle);
 double			angle_beta(double angle, t_player *player);
 

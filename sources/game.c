@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 12:48:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/02 14:59:15 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/03 11:37:30 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,17 +25,27 @@ static void	init_player(char **map, t_player *player)
 			break ;
 		i++;
 	}
-	player->pos.x = ((tmp - map[i]) * 64) + 31;
-	player->pos.y = (i * 64) + 31;
+	player->pos.x = ((tmp - map[i]) * 64) + 32;
+	player->pos.y = (i * 64) + 32;
 	*tmp = '0';
-	player->angle = 0;
+	player->angle = 90;
+}
+
+int				tab_len(char **tab)
+{
+	int	i;
+
+	i = 0;
+	while (tab[i])
+		i++;
+	return (i);
 }
 
 void		start_game(t_all *all_structs)
 {
 	all_structs->player = malloc(sizeof(t_player));
 	init_player(all_structs->map, all_structs->player);
-	all_structs->img = raycast(all_structs);
+	raycast(all_structs);
 	mlx_put_image_to_window(all_structs->mlx->mlx, all_structs->mlx->win,
 			all_structs->img->img, 0, 0);
 }
