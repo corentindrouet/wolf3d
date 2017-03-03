@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 08:12:05 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/03 14:57:34 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/03 15:08:02 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static t_double_pts	horizontal_search(t_all *all, double angle)
 
 	tmpy = ((int)(all->player->pos.y / BLOCK_SIZE) * BLOCK_SIZE) +
 		((angle >= 0 && angle < 180) ? -1 : BLOCK_SIZE);
-	tmpx = all->player->pos.x + round((all->player->pos.y - tmpy)
-		/ tan(RAD(angle)));
+	tmpx = all->player->pos.x + (all->player->pos.y - tmpy)
+		/ tan(RAD(angle));
 	ya = (angle >= 0 && angle < 180) ? -BLOCK_SIZE : BLOCK_SIZE;
 	xa = ((angle >= 180) ? -1 : 1) * (BLOCK_SIZE / tan(RAD(angle)));
 	while (tmpy >= 0 && tmpy < (tab_len(all->map) * BLOCK_SIZE)
@@ -57,8 +57,8 @@ static t_double_pts	vertical_search(t_all *all, double angle)
 
 	tmpx = ((int)(all->player->pos.x / BLOCK_SIZE) * BLOCK_SIZE) +
 		((angle >= 90 && angle < 270) ? -1 : BLOCK_SIZE);
-	tmpy = all->player->pos.y + round((all->player->pos.x - tmpx)
-		* tan(RAD(angle)));
+	tmpy = all->player->pos.y + (all->player->pos.x - tmpx)
+		* tan(RAD(angle));
 	xa = (angle >= 90 && angle < 270) ? -BLOCK_SIZE : BLOCK_SIZE;
 	ya = ((angle >= 90 && angle < 270) ? 1 : -1) *
 			(BLOCK_SIZE * tan(RAD(angle)));
@@ -88,12 +88,12 @@ double			search_pts_in_space(t_all *all, double angle)
 	b = vertical_search(all, angle);
 	pb = hypot(all->player->pos.x - b.x, all->player->pos.y - b.y);
 	if (angle == 180 || angle == 0 || a.x < 0 || a.y < 0
-			|| a.x >= (int)(ft_strlen(all->map[0]) * BLOCK_SIZE)
-			|| a.y >= (tab_len(all->map) * BLOCK_SIZE))
+			|| a.x >= (double)(ft_strlen(all->map[0]) * BLOCK_SIZE)
+			|| a.y >= (double)(tab_len(all->map) * BLOCK_SIZE))
 		return (pb);
 	if (angle == 270 || angle == 90 || b.x < 0 || b.y < 0
-			|| b.x >= (int)(ft_strlen(all->map[0]) * BLOCK_SIZE)
-			|| b.y >= (tab_len(all->map) * BLOCK_SIZE))
+			|| b.x >= (double)(ft_strlen(all->map[0]) * BLOCK_SIZE)
+			|| b.y >= (double)(tab_len(all->map) * BLOCK_SIZE))
 		return (-pa);
 	return ((pa > pb) ? pb : -pa);
 }

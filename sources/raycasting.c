@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/03 14:57:45 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/03 15:10:24 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int		choose_color(double angle, short wall_direction)
 	return ((int)0x00FFFFFF);
 }
 
-static void		write_column(t_all *all, int dist, int x, int color)
+static void		write_column(t_all *all, double dist, int x, int color)
 {
 	int		i;
 	int		col_len;
@@ -79,8 +79,8 @@ void			print_wall_to_img(t_all *all)
 		wall_direction = (res < 0) ? 1 : 0;
 		if (res < 0)
 			res *= -1;
-		write_column(all, round(res * cos(RAD(angle_beta(d_angle,
-					all->player)))), all->mlx->win_size.x - nb_col,
+		write_column(all, res * cos(RAD(angle_beta(d_angle,
+					all->player))), all->mlx->win_size.x - nb_col,
 					choose_color(d_angle, wall_direction));
 		nb_col--;
 	}
