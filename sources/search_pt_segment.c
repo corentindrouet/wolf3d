@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 08:12:05 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/16 15:13:36 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/16 15:19:28 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,15 +73,17 @@ double				search_pts_in_space(t_all *all, double angle)
 {
 	t_double_pts	a;
 	t_double_pts	b;
-	double	pa;
-	double	pb;
+	double			pa;
+	double			pb;
 
 	pa = 0;
 	pb = 0;
 	a = horizontal_search(all, angle);
-	pa = hypot((double)all->player->pos.x - a.x, (double)all->player->pos.y - a.y);
+	pa = hypot((double)all->player->pos.x - a.x,
+			(double)all->player->pos.y - a.y);
 	b = vertical_search(all, angle);
-	pb = hypot((double)all->player->pos.x - b.x, (double)all->player->pos.y - b.y);
+	pb = hypot((double)all->player->pos.x - b.x,
+			(double)all->player->pos.y - b.y);
 	if (angle == 180 || angle == 0 || a.x < 0 || a.y < 0
 			|| a.x >= (double)(ft_strlen(all->map[0]) * BLOCK_SIZE)
 			|| a.y >= (double)(tab_len(all->map) * BLOCK_SIZE))

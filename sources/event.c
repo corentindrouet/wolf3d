@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/16 13:43:56 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/16 15:13:42 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/16 15:18:31 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,18 @@ void	move(int keycode, t_all *param)
 		if (!verif_wall(param->player->pos.x + new_x,
 					param->player->pos.y + new_y, param->map))
 		{
-			param->player->extend.x += ((new_x >= 1 || new_x <= -1) ? fmod(new_x, (int)new_x) : new_x);
-			param->player->extend.y += ((new_y >= 1 || new_y <= -1) ? fmod(new_y, (int)new_y) : new_y);
+			param->player->extend.x += ((new_x >= 1 || new_x <= -1) ?
+					fmod(new_x, (int)new_x) : new_x);
+			param->player->extend.y += ((new_y >= 1 || new_y <= -1) ?
+					fmod(new_y, (int)new_y) : new_y);
 			param->player->pos.x += ((int)new_x + (int)param->player->extend.x);
 			param->player->pos.y += ((int)new_y + (int)param->player->extend.y);
 			if (param->player->extend.x >= 1 || param->player->extend.x <= -1)
-				param->player->extend.x = fmod(param->player->extend.x, (int)param->player->extend.x);
+				param->player->extend.x = fmod(param->player->extend.x,
+						(int)param->player->extend.x);
 			if (param->player->extend.y >= 1 || param->player->extend.y <= -1)
-				param->player->extend.y = fmod(param->player->extend.y, (int)param->player->extend.y);
+				param->player->extend.y = fmod(param->player->extend.y,
+						(int)param->player->extend.y);
 		}
 	}
 }

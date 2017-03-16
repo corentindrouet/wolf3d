@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/16 14:41:50 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/16 15:18:50 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ typedef struct	s_mlx_img
 
 typedef struct	s_player
 {
-	t_pts		pos;
+	t_pts			pos;
 	t_double_pts	extend;
-	double		angle;
+	double			angle;
 }				t_player;
 
 typedef struct	s_all
