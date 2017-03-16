@@ -6,12 +6,11 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/16 13:43:56 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/16 15:06:01 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/16 15:13:42 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <stdio.h>
 
 void	move(int keycode, t_all *param)
 {
@@ -45,8 +44,6 @@ void	move(int keycode, t_all *param)
 				param->player->extend.x = fmod(param->player->extend.x, (int)param->player->extend.x);
 			if (param->player->extend.y >= 1 || param->player->extend.y <= -1)
 				param->player->extend.y = fmod(param->player->extend.y, (int)param->player->extend.y);
-			printf("x %d %f y %d %f\n", param->player->pos.x, param->player->extend.x,
-					param->player->pos.y, param->player->extend.y);
 		}
 	}
 }
