@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/03 14:55:44 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/16 14:41:50 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # include <math.h>
 # include "mlx.h"
 # include "libft.h"
+# include "touch.h"
 # define BLOCK_SIZE 64
 # define RAD(x) ((x * M_PI) / 180)
 
@@ -52,6 +53,7 @@ typedef struct	s_mlx_img
 typedef struct	s_player
 {
 	t_pts		pos;
+	t_double_pts	extend;
 	double		angle;
 }				t_player;
 
@@ -72,5 +74,6 @@ int				verif_wall(int x, int y, char **map);
 void			print_wall_to_img(t_all *all);
 double			search_pts_in_space(t_all *all, double angle);
 double			angle_beta(double angle, t_player *player);
+void			move(int keycode, t_all *param);
 
 #endif

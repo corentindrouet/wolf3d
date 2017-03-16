@@ -6,17 +6,18 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/03 13:20:43 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/16 14:24:47 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+#include <stdio.h>
 
 static int	keypress(int keycode, t_all *param)
 {
 	int	i;
 
-	if (keycode == 53)
+	if (keycode == ESC)
 	{
 		mlx_destroy_window(param->mlx->mlx, param->mlx->win);
 		mlx_destroy_image(param->mlx->mlx, param->img->img);
@@ -29,30 +30,13 @@ static int	keypress(int keycode, t_all *param)
 		free(param->map);
 		exit(0);
 	}
-	if (keycode == 123)
-	{
-		ft_bzero(param->img->str_img,
-				param->mlx->win_size.y * param->img->size_line);
-		param->player->angle++;
-		if (param->player->angle >= 360)
-			param->player->angle = 0;
-		print_wall_to_img(param);
-		mlx_clear_window(param->mlx->mlx, param->mlx->win);
-		mlx_put_image_to_window(param->mlx->mlx, param->mlx->win,
-				param->img->img, 0, 0);
-	}
-	if (keycode == 124)
-	{
-		ft_bzero(param->img->str_img,
-				param->mlx->win_size.y * param->img->size_line);
-		param->player->angle--;
-		if (param->player->angle < 0)
-			param->player->angle = 359;
-		print_wall_to_img(param);
-		mlx_clear_window(param->mlx->mlx, param->mlx->win);
-		mlx_put_image_to_window(param->mlx->mlx, param->mlx->win,
-				param->img->img, 0, 0);
-	}
+	ft_bzero(param->img->str_img,
+			param->mlx->win_size.y * param->img->size_line);
+	move(keycode, param);
+	print_wall_to_img(param);
+	mlx_clear_window(param->mlx->mlx, param->mlx->win);
+	mlx_put_image_to_window(param->mlx->mlx, param->mlx->win,
+			param->img->img, 0, 0);
 	return (0);
 }
 

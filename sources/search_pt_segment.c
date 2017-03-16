@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 08:12:05 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/13 14:32:59 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/16 14:16:01 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,13 @@ static t_double_pts	horizontal_search(t_all *all, double angle)
 	double			ya;
 
 	pos.y = ((int)(all->player->pos.y / BLOCK_SIZE) * BLOCK_SIZE) +
-		((angle >= 0 && angle < 180) ? -1 : BLOCK_SIZE);
+		((angle >= 0 && angle < 180) ? 0 : BLOCK_SIZE);
 	pos.x = all->player->pos.x + ((all->player->pos.y - pos.y)
 		/ tan(RAD(angle)));
 	ya = (angle >= 0 && angle < 180) ? -BLOCK_SIZE : BLOCK_SIZE;
 	xa = ((angle >= 180) ? -1 : 1) * (BLOCK_SIZE / tan(RAD(angle)));
+	if (angle >= 0 && angle < 180)
+		pos.y--;
 	while (pos.y >= 0 && pos.y < (double)(tab_len(all->map) * BLOCK_SIZE)
 		&& pos.x >= 0 && pos.x < (double)(ft_strlen(all->map[0]) * BLOCK_SIZE)
 		&& !verif_wall(pos.x, pos.y, all->map))
@@ -50,12 +52,14 @@ static t_double_pts	vertical_search(t_all *all, double angle)
 	double			ya;
 
 	pos.x = ((int)(all->player->pos.x / BLOCK_SIZE) * BLOCK_SIZE) +
-		((angle >= 90 && angle < 270) ? -1 : BLOCK_SIZE);
+		((angle >= 90 && angle < 270) ? 0 : BLOCK_SIZE);
 	pos.y = all->player->pos.y + ((all->player->pos.x - pos.x)
 		* tan(RAD(angle)));
 	xa = (angle >= 90 && angle < 270) ? -BLOCK_SIZE : BLOCK_SIZE;
 	ya = ((angle >= 90 && angle < 270) ? 1 : -1) *
 			(BLOCK_SIZE * tan(RAD(angle)));
+	if (angle >= 90 && angle < 270)
+		pos.x--;
 	while (pos.y >= 0 && pos.y < (double)(tab_len(all->map) * BLOCK_SIZE)
 		&& pos.x >= 0 && pos.x < (double)(ft_strlen(all->map[0]) * BLOCK_SIZE)
 		&& !verif_wall(pos.x, pos.y, all->map))
