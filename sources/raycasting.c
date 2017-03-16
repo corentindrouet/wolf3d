@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/03 15:11:58 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/16 11:42:37 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ double			angle_beta(double angle, t_player *player)
 	if (player->angle < 29 && angle >= 329)
 		return (angle - (player->angle + 360));
 	if (player->angle > 329 && angle < 29)
-		angle += player->angle;
+		angle += 360;
 	return (angle - (double)player->angle);
 }
 
