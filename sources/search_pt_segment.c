@@ -6,11 +6,12 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 08:12:05 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/16 15:19:28 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/20 11:23:33 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+#include <float.h>
 
 int					verif_wall(int x, int y, char **map)
 {
@@ -75,22 +76,35 @@ double				search_pts_in_space(t_all *all, double angle)
 	t_double_pts	b;
 	double			pa;
 	double			pb;
+	double			tmp;
 
-	pa = 0;
-	pb = 0;
-	a = horizontal_search(all, angle);
-	pa = hypot((double)all->player->pos.x - a.x,
-			(double)all->player->pos.y - a.y);
-	b = vertical_search(all, angle);
-	pb = hypot((double)all->player->pos.x - b.x,
-			(double)all->player->pos.y - b.y);
+	pa = DBL_MAX;
+	pb = DBL_MAX;
+	if (angle != 180 && angle != 0)
+	{
+		a = horizontal_search(all, angle);
+		pa = fabs(fabs(all->player->pos.y - a.y) / sin(RAD(angle)));
+		tmp = fabs(fabs(all->player->pos.x - a.x) / cos(RAD(angle)));
+		if (tmp < pa)
+			pa = tmp;
+	}
+	if (angle != 270 && angle != 90)
+	{
+		b = vertical_search(all, angle);
+		pb = fabs(fabs(all->player->pos.y - b.y) / sin(RAD(angle)));
+		tmp = fabs(fabs(all->player->pos.x - b.x) / cos(RAD(angle)));
+		if (tmp < pb)
+			pb = tmp;
+	}
 	if (angle == 180 || angle == 0 || a.x < 0 || a.y < 0
 			|| a.x >= (double)(ft_strlen(all->map[0]) * BLOCK_SIZE)
-			|| a.y >= (double)(tab_len(all->map) * BLOCK_SIZE))
+			|| a.y >= (double)(tab_len(all->map) * BLOCK_SIZE)
+			|| pa == DBL_MAX)
 		return (pb);
 	if (angle == 270 || angle == 90 || b.x < 0 || b.y < 0
 			|| b.x >= (double)(ft_strlen(all->map[0]) * BLOCK_SIZE)
-			|| b.y >= (double)(tab_len(all->map) * BLOCK_SIZE))
+			|| b.y >= (double)(tab_len(all->map) * BLOCK_SIZE)
+			|| pb == DBL_MAX)
 		return (-pa);
 	return ((pa > pb) ? pb : -pa);
 }

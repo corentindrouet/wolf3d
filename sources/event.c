@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/16 13:43:56 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/16 15:18:31 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/20 11:22:28 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 static void	side_move(int keycode, t_all *param)
 {
-	param->player->angle += ((keycode == LEFT || keycode == D_A) ? 1 : -1);
+	param->player->angle += ((keycode == LEFT || keycode == D_A) ? 2 : -2);
 	if (param->player->angle >= 360)
 		param->player->angle = 0;
 	else if (param->player->angle < 0)
-		param->player->angle = 359;
+		param->player->angle = 360 + param->player->angle;
 }
 
 static void	up_down_move(int keycode, t_all *param)
