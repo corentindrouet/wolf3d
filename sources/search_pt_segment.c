@@ -6,12 +6,11 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 08:12:05 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/20 11:23:33 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/20 13:58:42 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <float.h>
 
 int					verif_wall(int x, int y, char **map)
 {
@@ -85,15 +84,15 @@ double				search_pts_in_space(t_all *all, double angle)
 		a = horizontal_search(all, angle);
 		pa = fabs(fabs(all->player->pos.y - a.y) / sin(RAD(angle)));
 		tmp = fabs(fabs(all->player->pos.x - a.x) / cos(RAD(angle)));
-		if (tmp < pa)
+		if (tmp < pa && angle != 270 && angle != 90)
 			pa = tmp;
 	}
 	if (angle != 270 && angle != 90)
 	{
 		b = vertical_search(all, angle);
-		pb = fabs(fabs(all->player->pos.y - b.y) / sin(RAD(angle)));
-		tmp = fabs(fabs(all->player->pos.x - b.x) / cos(RAD(angle)));
-		if (tmp < pb)
+		tmp = fabs(fabs(all->player->pos.y - b.y) / sin(RAD(angle)));
+		pb = fabs(fabs(all->player->pos.x - b.x) / cos(RAD(angle)));
+		if (tmp < pb && angle != 180 && angle != 0)
 			pb = tmp;
 	}
 	if (angle == 180 || angle == 0 || a.x < 0 || a.y < 0

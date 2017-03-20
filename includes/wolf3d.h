@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/16 15:18:50 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/20 13:37:56 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # include "touch.h"
 # define BLOCK_SIZE 64
 # define RAD(x) ((x * M_PI) / 180)
+# define DBL_MAX 1.7976931348623157e+308
 
 typedef struct	s_pts
 {
@@ -52,7 +53,7 @@ typedef struct	s_mlx_img
 
 typedef struct	s_player
 {
-	t_pts			pos;
+	t_double_pts			pos;
 	t_double_pts	extend;
 	double			angle;
 }				t_player;
