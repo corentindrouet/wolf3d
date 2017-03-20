@@ -6,11 +6,12 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/16 13:43:56 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/20 13:58:21 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/20 14:29:07 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+#include <stdio.h>
 
 static void	side_move(int keycode, t_all *param)
 {
@@ -19,6 +20,7 @@ static void	side_move(int keycode, t_all *param)
 		param->player->angle = 0;
 	else if (param->player->angle < 0)
 		param->player->angle = 360 + param->player->angle;
+	printf("angle %f\n", param->player->angle);
 }
 
 static void	up_down_move(int keycode, t_all *param)
@@ -36,6 +38,7 @@ static void	up_down_move(int keycode, t_all *param)
 		param->player->pos.x += new_x;
 		param->player->pos.y += new_y;
 	}
+	printf("player.x %f player.y %f\n", param->player->pos.x, param->player->pos.y);
 }
 
 void		move(int keycode, t_all *param)

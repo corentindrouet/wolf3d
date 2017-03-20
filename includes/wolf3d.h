@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/20 13:37:56 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/20 15:25:54 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define BLOCK_SIZE 64
 # define RAD(x) ((x * M_PI) / 180)
 # define DBL_MAX 1.7976931348623157e+308
+# define ANGLE 60
 
 typedef struct	s_pts
 {
@@ -53,17 +54,25 @@ typedef struct	s_mlx_img
 
 typedef struct	s_player
 {
-	t_double_pts			pos;
+	t_double_pts	pos;
 	t_double_pts	extend;
 	double			angle;
 }				t_player;
 
+typedef struct	s_precompute
+{
+	double		*cos;
+	double		*sin;
+	double		*tan;
+}				t_precompute;
+
 typedef struct	s_all
 {
-	t_mlx		*mlx;
-	t_mlx_img	*img;
-	t_player	*player;
-	char		**map;
+	t_mlx			*mlx;
+	t_mlx_img		*img;
+	t_player		*player;
+	char			**map;
+	t_precompute	*precomputed;
 }				t_all;
 
 t_mlx_img		*new_image(void *mlx, int x, int y);
@@ -76,5 +85,6 @@ void			print_wall_to_img(t_all *all);
 double			search_pts_in_space(t_all *all, double angle);
 double			angle_beta(double angle, t_player *player);
 void			move(int keycode, t_all *param);
+void			init_precompute(t_all *all);
 
 #endif

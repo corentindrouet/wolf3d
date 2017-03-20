@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 12:48:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/20 11:22:40 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/20 15:23:23 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	init_player(char **map, t_player *player)
 	player->extend.x = 0;
 	player->extend.y = 0;
 	*tmp = '0';
-	player->angle = 180;
+	player->angle = 0;
 }
 
 int			tab_len(char **tab)

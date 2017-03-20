@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/20 11:22:52 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/20 15:18:10 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@ static int	keypress(int keycode, t_all *param)
 		while (param->map[i])
 			free(param->map[i++]);
 		free(param->map);
+		free(param->precomputed->cos);
+		free(param->precomputed->sin);
+		free(param->precomputed->tan);
 		exit(0);
 	}
 	ft_bzero(param->img->str_img,
@@ -102,6 +105,9 @@ int			main(void)
 	all_structs.map = read_map();
 	all_structs.mlx = malloc(sizeof(t_mlx));
 	init_mlx_window(all_structs.mlx);
+	init_precompute(&all_structs);
+	if (!all_structs.precomputed)
+		exit(0);
 	start_game(&all_structs);
 	mlx_hook(all_structs.mlx->win, 2, 0, keypress, &all_structs);
 	mlx_loop(all_structs.mlx->mlx);
