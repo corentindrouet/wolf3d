@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/21 08:58:29 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/21 11:45:19 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ static void	concat(char *buff, char **str)
 		free(*str);
 		*str = tmp;
 	}
+	if (!(*str))
+		exit(0);
 }
 
 static char	**read_map(void)
@@ -91,13 +93,15 @@ int			main(void)
 			* BLOCK_SIZE);
 	all_structs.map.size.y = (double)(tab_len(all_structs.map.map)
 			* BLOCK_SIZE);
-	all_structs.mlx = malloc(sizeof(t_mlx));
+	if (!(all_structs.mlx = malloc(sizeof(t_mlx))))
+		exit(0);
 	init_mlx_window(all_structs.mlx);
 	init_precompute(&all_structs);
 	if (!all_structs.precomputed)
 		exit(0);
 	start_game(&all_structs);
 	mlx_hook(all_structs.mlx->win, 2, 0, keypress, &all_structs);
+	mlx_hook(all_structs.mlx->win, 17, (1L << 17), close_event, &all_structs);
 	mlx_loop(all_structs.mlx->mlx);
 	return (0);
 }

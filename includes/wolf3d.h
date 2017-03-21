@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/21 08:55:55 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/21 11:41:31 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,6 @@ double			angle_beta(double angle, t_player *player);
 void			move(int keycode, t_all *param);
 void			init_precompute(t_all *all);
 void			exit_properly(t_all *param);
+int				close_event(void *param);
 
 #endif

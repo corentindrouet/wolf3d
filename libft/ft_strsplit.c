@@ -6,7 +6,7 @@
 /*   By: cdrouet <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/26 08:19:42 by cdrouet           #+#    #+#             */
-/*   Updated: 2016/02/15 11:29:14 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/21 10:32:32 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ static int	ft_nbrword(char const *s, char c)
 	return (compt);
 }
 
+static void	init_while(int *j, char *sc, char c)
+{
+	j[0] = 0;
+	j[3] = 0;
+	while (sc[++j[1]] != c && sc[j[1]] != '\0')
+		j[3]++;
+}
+
 char		**ft_strsplit(char const *s, char c)
 {
 	char	**ptr;
@@ -46,16 +54,15 @@ char		**ft_strsplit(char const *s, char c)
 
 	sc = ft_strctrim(s, c);
 	j[4] = ft_nbrword(sc, c);
-	ptr = (char**)malloc(sizeof(char*) * (j[4] + 1));
+	if (!(ptr = (char**)malloc(sizeof(char*) * (j[4] + 1))))
+		return (NULL);
 	j[2] = -1;
 	j[1] = -1;
 	while (++j[2] < j[4])
 	{
-		j[0] = 0;
-		j[3] = 0;
-		while (sc[++j[1]] != c && sc[j[1]] != '\0')
-			j[3]++;
-		ptr[j[2]] = ft_strnew(j[3] + 1);
+		init_while(j, sc, c);
+		if (!(ptr[j[2]] = ft_strnew(j[3] + 1)))
+			return (NULL);
 		while (j[3] > 0)
 			ptr[j[2]][j[0]++] = sc[j[1] - j[3]--];
 		while (sc[j[1]] == c)

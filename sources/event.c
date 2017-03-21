@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/16 13:43:56 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/21 09:28:57 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/21 11:44:41 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,12 @@ void		exit_properly(t_all *param)
 
 	mlx_destroy_window(param->mlx->mlx, param->mlx->win);
 	mlx_destroy_image(param->mlx->mlx, param->img->img);
-	free(param->mlx->mlx);
+	param->mlx->mlx = NULL;
+	param->mlx->win = NULL;
+	param->img->str_img = NULL;
+	param->img->img = NULL;
 	free(param->mlx);
+	free(param->img);
 	free(param->player);
 	i = 0;
 	while (param->map.map[i])
@@ -64,5 +68,10 @@ void		exit_properly(t_all *param)
 	free(param->precomputed->cos);
 	free(param->precomputed->sin);
 	free(param->precomputed->tan);
+	free(param->precomputed);
+	param->mlx = NULL;
+	param->img = NULL;
+	param->player = NULL;
+	param->precomputed = NULL;
 	exit(0);
 }
