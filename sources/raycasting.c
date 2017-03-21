@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/20 15:30:30 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/21 08:56:47 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ static void		write_column(t_all *all, double dist, int x, int color)
 	double	cam_proj_dist;
 	int		n;
 
-	cam_proj_dist = round((all->mlx->win_size.x / 2) / tan(RAD(30)));
+	cam_proj_dist = round((all->mlx->win_size.x / 2) /
+			all->precomputed->tan[(int)(30 / all->index_divide)]);
 	col_len = round((cam_proj_dist * BLOCK_SIZE) / dist);
 	i = all->mlx->win_size.y / 2;
 	n = i - (col_len / 2);
@@ -79,8 +80,9 @@ void			print_wall_to_img(t_all *all)
 		wall_direction = (res < 0) ? 1 : 0;
 		if (res < 0)
 			res *= -1;
-		write_column(all, res * cos(RAD(angle_beta(d_angle,
-					all->player))), all->mlx->win_size.x - nb_col,
+		write_column(all, res * all->precomputed->cos[(int)fabs(angle_beta(
+					d_angle, all->player) / all->index_divide)],
+					all->mlx->win_size.x - nb_col,
 					choose_color(d_angle, wall_direction));
 		nb_col--;
 	}

@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 12:48:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/20 15:23:23 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/21 09:31:56 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int			tab_len(char **tab)
 void		start_game(t_all *all_structs)
 {
 	all_structs->player = malloc(sizeof(t_player));
-	init_player(all_structs->map, all_structs->player);
+	init_player(all_structs->map.map, all_structs->player);
 	raycast(all_structs);
 	mlx_put_image_to_window(all_structs->mlx->mlx, all_structs->mlx->win,
 			all_structs->img->img, 0, 0);

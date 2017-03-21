@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/20 15:18:10 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/21 08:58:29 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,8 @@
 
 static int	keypress(int keycode, t_all *param)
 {
-	int	i;
-
 	if (keycode == ESC)
-	{
-		mlx_destroy_window(param->mlx->mlx, param->mlx->win);
-		mlx_destroy_image(param->mlx->mlx, param->img->img);
-		free(param->mlx->mlx);
-		free(param->mlx);
-		free(param->player);
-		i = 0;
-		while (param->map[i])
-			free(param->map[i++]);
-		free(param->map);
-		free(param->precomputed->cos);
-		free(param->precomputed->sin);
-		free(param->precomputed->tan);
-		exit(0);
-	}
+		exit_properly(param);
 	ft_bzero(param->img->str_img,
 			param->mlx->win_size.y * param->img->size_line);
 	move(keycode, param);
@@ -102,7 +86,11 @@ int			main(void)
 {
 	t_all		all_structs;
 
-	all_structs.map = read_map();
+	all_structs.map.map = read_map();
+	all_structs.map.size.x = (double)(ft_strlen(all_structs.map.map[0])
+			* BLOCK_SIZE);
+	all_structs.map.size.y = (double)(tab_len(all_structs.map.map)
+			* BLOCK_SIZE);
 	all_structs.mlx = malloc(sizeof(t_mlx));
 	init_mlx_window(all_structs.mlx);
 	init_precompute(&all_structs);
