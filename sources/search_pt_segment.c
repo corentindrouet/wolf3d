@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 08:12:05 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/21 09:28:45 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/21 09:33:29 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,8 +85,6 @@ static t_double_pts	search_pt(double *p, t_all *all, double angle,
 		(*p) = 0;
 	tmp = fabs(fabs(all->player->pos.x - pt.x) /
 			all->precomputed->cos[(int)(angle / all->index_divide)]);
-	if (angle == 0)
-		printf("p %f tmp %f\n", (*p), tmp);
 	if ((tmp < (*p) && tmp) || !(*p))
 		(*p) = tmp;
 	return (pt);
