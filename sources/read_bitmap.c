@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 13:48:04 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/22 10:56:09 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/22 14:03:40 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,16 @@ t_bmp_img	*read_bmp(char *file)
 	if (!img_data->str_img)
 		return (NULL);
 	read(fd, img_data->str_img, img_data->bit_map_info.bi_size_image);
+	img_data->tab_bmp = (unsigned int*)malloc(sizeof(unsigned int) * (img_data->bit_map_info.bi_size_image / 3));
+	verif = 0;
+	while ((unsigned int)verif < img_data->bit_map_info.bi_size_image)
+	{
+		img_data->tab_bmp[((img_data->bit_map_info.bi_size_image / 3) - 1) - (verif / 3)] =
+			(img_data->str_img[verif] << 16)
+			+ (img_data->str_img[verif + 1] << 8)
+			+ (img_data->str_img[verif + 2]);
+		verif += 3;
+	}
 	close(fd);
 	return (img_data);
 }

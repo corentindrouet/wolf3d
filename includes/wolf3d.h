@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/22 11:16:04 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/22 13:21:57 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ typedef struct	s_map
 typedef struct	s_bmp_img
 {
 	unsigned char		*str_img;
+	unsigned int		*tab_bmp;
 	t_bmp_header_info	bit_map_info;
 }				t_bmp_img;
 
