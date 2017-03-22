@@ -6,11 +6,12 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/21 11:45:19 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/22 10:57:30 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+#include <stdio.h>
 
 static int	keypress(int keycode, t_all *param)
 {
@@ -88,6 +89,8 @@ int			main(void)
 {
 	t_all		all_structs;
 
+
+	all_structs.texture = read_bmp("Wall.bmp");
 	all_structs.map.map = read_map();
 	all_structs.map.size.x = (double)(ft_strlen(all_structs.map.map[0])
 			* BLOCK_SIZE);

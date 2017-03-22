@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 08:12:05 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/21 09:33:29 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/22 11:15:46 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,28 +90,29 @@ static t_double_pts	search_pt(double *p, t_all *all, double angle,
 	return (pt);
 }
 
-double				search_pts_in_space(t_all *all, double angle)
+t_pts_dist			search_pts_in_space(t_all *all, double angle)
 {
-	t_double_pts	a;
-	t_double_pts	b;
-	double			pa;
-	double			pb;
+	t_pts_dist	a;
+	t_pts_dist	b;
+//	double			pa;
+//	double			pb;
 
-	pa = DBL_MAX;
-	pb = DBL_MAX;
+	a.dist = DBL_MAX;
+	b.dist = DBL_MAX;
 	if (angle != 180 && angle != 0)
-		a = search_pt(&pa, all, angle, horizontal_search);
+		a.pt = search_pt(&(a.dist), all, angle, horizontal_search);
 	if (angle != 270 && angle != 90)
-		b = search_pt(&pb, all, angle, vertical_search);
-	if (angle == 180 || angle == 0 || a.x < 0 || a.y < 0
-			|| a.x >= (double)all->map.size.x
-			|| a.y >= (double)all->map.size.y
-			|| pa == DBL_MAX)
-		return (pb);
-	if (angle == 270 || angle == 90 || b.x < 0 || b.y < 0
-			|| b.x >= (double)all->map.size.x
-			|| b.y >= (double)all->map.size.y
-			|| pb == DBL_MAX)
-		return (-pa);
-	return ((pa > pb) ? pb : -pa);
+		b.pt = search_pt(&(b.dist), all, angle, vertical_search);
+	if (angle == 180 || angle == 0 || a.pt.x < 0 || a.pt.y < 0
+			|| a.pt.x >= (double)all->map.size.x
+			|| a.pt.y >= (double)all->map.size.y
+			|| a.dist == DBL_MAX)
+		return (b);
+	a.dist = -a.dist;
+	if (angle == 270 || angle == 90 || b.pt.x < 0 || b.pt.y < 0
+			|| b.pt.x >= (double)all->map.size.x
+			|| b.pt.y >= (double)all->map.size.y
+			|| b.dist == DBL_MAX)
+		return (a);
+	return ((-a.dist > b.dist) ? b : a);
 }
