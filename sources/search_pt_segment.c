@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 08:12:05 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/27 10:59:40 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/27 11:13:02 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,8 @@ t_pts_dist			search_pts_in_space(t_all *all, double angle)
 		return (b);
 	a.dist = -a.dist;
 	if (angle == 270 || angle == 90 || b.pt.x < 0 || b.pt.y < 0
-			|| b.pt.x >= (double)all->map.size.x
-			|| b.pt.y >= (double)all->map.size.y
+			|| b.pt.y >= (double)all->map.size.x
+			|| b.pt.x >= (double)all->map.size.y
 			|| b.dist == DBL_MAX)
 		return (a);
 	return ((-a.dist > b.dist) ? b : a);

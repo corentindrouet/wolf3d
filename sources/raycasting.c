@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/27 10:58:47 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/27 11:05:54 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,24 +29,22 @@ static int		choose_color(double angle, short wall_direction)
 
 static void		write_column(t_all *all, t_pts_dist dist, int x, int color)
 {
-	int		i;
 	int		col_len;
 	double	cam_proj_dist;
-	int		n;
+	int		corner_size;
 	int		j;
 
 	cam_proj_dist = round((all->mlx->win_size.x / 2) /
 			all->precomputed->tan[(int)(30 / all->index_divide)]);
 	col_len = round((cam_proj_dist * BLOCK_SIZE) / dist.dist);
-	i = all->mlx->win_size.y / 2;
 	col_len = (col_len / 2) * 2;
-	n = (all->mlx->win_size.y - col_len) / 2;
+	corner_size = (all->mlx->win_size.y - col_len) / 2;
 	j = 0;
-	while (j < n)
+	while (j < corner_size)
 		write_img(x, j++, all->img, (int)0x00DBAE63);
-	while (j < (all->mlx->win_size.y - n))
+	while (j < (all->mlx->win_size.y - corner_size))
 	{
-		color = ((j - n) * 100) / col_len;
+		color = ((j - corner_size) * 100) / col_len;
 		color = (BLOCK_SIZE * color) / 100;
 		color = all->texture->tab_bmp[(color * BLOCK_SIZE)
 			+ ((int)(dist.pt.x) % BLOCK_SIZE)];
