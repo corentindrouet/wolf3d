@@ -6,12 +6,11 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/27 11:05:54 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/27 14:28:17 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <stdio.h>
 
 static int		choose_color(double angle, short wall_direction)
 {
@@ -42,7 +41,8 @@ static void		write_column(t_all *all, t_pts_dist dist, int x, int color)
 	j = 0;
 	while (j < corner_size)
 		write_img(x, j++, all->img, (int)0x00DBAE63);
-	while (j < (all->mlx->win_size.y - corner_size))
+	while (j < ((all->mlx->win_size.y - corner_size > all->mlx->win_size.y) ?
+				all->mlx->win_size.y : (all->mlx->win_size.y - corner_size)))
 	{
 		color = ((j - corner_size) * 100) / col_len;
 		color = (BLOCK_SIZE * color) / 100;

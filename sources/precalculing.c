@@ -6,12 +6,11 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/20 14:35:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/21 08:20:46 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/27 11:21:09 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <stdio.h>
 
 static double	*init_math(double (*f)(double), t_all *all)
 {

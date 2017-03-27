@@ -6,12 +6,11 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 08:12:05 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/27 11:13:02 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/27 14:28:24 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <stdio.h>
 
 int					verif_wall(int x, int y, t_map *map)
 {
@@ -85,7 +84,7 @@ static t_double_pts	search_pt(double *p, t_all *all, double angle,
 		(*p) = 0;
 	tmp = fabs(fabs(all->player->pos.x - pt.x) /
 			all->precomputed->cos[(int)(angle / all->index_divide)]);
-	if ((tmp < (*p) && tmp) || !(*p))
+	if ((tmp && tmp < (*p)) || !(*p))
 		(*p) = tmp;
 	return (pt);
 }

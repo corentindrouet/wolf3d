@@ -6,24 +6,17 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/27 10:34:55 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/27 14:27:19 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-#include <stdio.h>
 
 static int	keypress(int keycode, t_all *param)
 {
 	if (keycode == ESC)
 		exit_properly(param);
-	ft_bzero(param->img->str_img,
-			param->mlx->win_size.y * param->img->size_line);
 	move(keycode, param);
-	print_wall_to_img(param);
-	mlx_clear_window(param->mlx->mlx, param->mlx->win);
-	mlx_put_image_to_window(param->mlx->mlx, param->mlx->win,
-			param->img->img, 0, 0);
 	return (0);
 }
 
@@ -104,6 +97,7 @@ int			main(void)
 	start_game(&all_structs);
 	mlx_hook(all_structs.mlx->win, 2, 0, keypress, &all_structs);
 	mlx_hook(all_structs.mlx->win, 17, (1L << 17), close_event, &all_structs);
+	mlx_loop_hook(all_structs.mlx->mlx, auto_refresh_function, &all_structs);
 	mlx_loop(all_structs.mlx->mlx);
 	return (0);
 }

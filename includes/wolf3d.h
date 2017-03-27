@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/22 13:21:57 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/27 14:27:04 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,6 @@ void			init_precompute(t_all *all);
 void			exit_properly(t_all *param);
 int				close_event(void *param);
 t_bmp_img		*read_bmp(char *file);
+int				auto_refresh_function(t_all *param);
 
 #endif
