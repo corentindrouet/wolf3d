@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/27 09:27:32 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/27 10:58:47 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,11 +47,12 @@ static void		write_column(t_all *all, t_pts_dist dist, int x, int color)
 	while (j < (all->mlx->win_size.y - n))
 	{
 		color = ((j - n) * 100) / col_len;
-		color = (64 * color) / 100;
-		color = all->texture->tab_bmp[(color * 64) + ((int)(dist.pt.x) % 64)];
+		color = (BLOCK_SIZE * color) / 100;
+		color = all->texture->tab_bmp[(color * BLOCK_SIZE)
+			+ ((int)(dist.pt.x) % BLOCK_SIZE)];
 		write_img(x, j++, all->img, color);
 	}
-	while(j < all->mlx->win_size.y)
+	while (j < all->mlx->win_size.y)
 		write_img(x, j++, all->img, (int)0x0051C228);
 }
 

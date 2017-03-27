@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/22 10:57:30 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/27 10:34:55 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ static char	**read_map(void)
 int			main(void)
 {
 	t_all		all_structs;
-
 
 	all_structs.texture = read_bmp("Wall.bmp");
 	all_structs.map.map = read_map();
