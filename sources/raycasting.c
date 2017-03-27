@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/22 14:25:29 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/27 09:27:32 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,30 +39,20 @@ static void		write_column(t_all *all, t_pts_dist dist, int x, int color)
 			all->precomputed->tan[(int)(30 / all->index_divide)]);
 	col_len = round((cam_proj_dist * BLOCK_SIZE) / dist.dist);
 	i = all->mlx->win_size.y / 2;
-	j = i;
-	n = i - (col_len / 2);
-	while (i > n)
+	col_len = (col_len / 2) * 2;
+	n = (all->mlx->win_size.y - col_len) / 2;
+	j = 0;
+	while (j < n)
+		write_img(x, j++, all->img, (int)0x00DBAE63);
+	while (j < (all->mlx->win_size.y - n))
 	{
-		color = ((n - i) * 100) / (n - j);
-		color = (32 * color) / 100;
-		color = all->texture->tab_bmp[((32 * 64) - (color * 64)) + ((int)(dist.pt.x) % 64)];
-		write_img(x, i--, all->img, color);
+		color = ((j - n) * 100) / col_len;
+		color = (64 * color) / 100;
+		color = all->texture->tab_bmp[(color * 64) + ((int)(dist.pt.x) % 64)];
+		write_img(x, j++, all->img, color);
 	}
-	exit(0);
-	while (i >= 0)
-		write_img(x, i--, all->img, (int)0x00DBAE63);
-	i = all->mlx->win_size.y / 2;
-	j = i;
-	n = i + (col_len / 2);
-	while (i < n)
-	{
-		color = ((i - n) * 100) / (j - n);
-		color = (32 * color) / 100;
-		color = all->texture->tab_bmp[((32 * 64) + (color * 64)) + ((int)(dist.pt.x) % 64)];
-		write_img(x, i++, all->img, color);
-	}
-	while (i < all->mlx->win_size.y)
-		write_img(x, i++, all->img, (int)0x0051C228);
+	while(j < all->mlx->win_size.y)
+		write_img(x, j++, all->img, (int)0x0051C228);
 }
 
 double			angle_beta(double angle, t_player *player)
