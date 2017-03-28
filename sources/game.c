@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 12:48:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/28 10:04:50 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/28 11:48:56 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,20 @@ int			tab_len(char **tab)
 	return (i);
 }
 
+double			angle_beta(double angle, t_player *player)
+{
+	if (player->angle < 29 && angle >= 329)
+		return (angle - (player->angle + 360));
+	if (player->angle > 329 && angle < 29)
+		angle += 360;
+	return (angle - (double)player->angle);
+}
+
 void		start_game(t_all *all_structs)
 {
 	all_structs->player = malloc(sizeof(t_player));
 	init_player(all_structs->map.map, all_structs->player);
+	all_structs->options.enable_texture = 1;
 	raycast(all_structs);
 	mlx_put_image_to_window(all_structs->mlx->mlx, all_structs->mlx->win,
 			all_structs->img->img, 0, 0);

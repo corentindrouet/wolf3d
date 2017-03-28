@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/28 08:26:07 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/28 14:02:51 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@ static int	keypress(int keycode, t_all *param)
 {
 	if (keycode == ESC)
 		exit_properly(param);
+	if (keycode == ESP)
+		param->options.enable_texture = (param->options.enable_texture) ? 0 : 1;
 	move(keycode, param);
 	return (0);
 }
@@ -82,7 +84,14 @@ int			main(void)
 {
 	t_all		all_structs;
 
-	all_structs.texture = read_bmp("Wall.bmp");
+	all_structs.texture[0] = read_bmp("Wall.bmp");
+	all_structs.texture[1] = read_bmp("Wall2.bmp");
+	all_structs.texture[2] = read_bmp("Wall3.bmp");
+	all_structs.texture[3] = read_bmp("Wall4.bmp");
+	all_structs.options.texture_problem = 0;
+	if (!all_structs.texture[0] || !all_structs.texture[1]
+			|| !all_structs.texture[2] || !all_structs.texture[3])
+		all_structs.options.texture_problem = 1;
 	all_structs.map.map = read_map();
 	all_structs.map.size.x = (double)(ft_strlen(all_structs.map.map[0])
 			* BLOCK_SIZE);

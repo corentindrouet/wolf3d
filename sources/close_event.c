@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/21 10:48:09 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/27 14:28:39 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/28 13:51:46 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,19 @@ int	auto_refresh_function(t_all *param)
 	return (0);
 }
 
-int	close_event(void *param)
+int	close_event(t_all *param)
 {
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		free(param->texture[i]->str_img);
+		free(param->texture[i]->tab_bmp);
+		free(param->texture[i]);
+		param->texture[i] = NULL;
+		i++;
+	}
 	exit_properly(param);
 	return (0);
 }

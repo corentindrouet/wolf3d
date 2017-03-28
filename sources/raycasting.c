@@ -6,11 +6,25 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/27 14:28:17 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/28 13:58:53 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
+
+static int		choose_index(double angle, short wall_direction)
+{
+	if (wall_direction)
+	{
+		if (angle >= 0 && angle < 180)
+			return (0);
+		else
+			return (1);
+	}
+	if (angle >= 90 && angle < 270)
+		return (2);
+	return (3);
+}
 
 static int		choose_color(double angle, short wall_direction)
 {
@@ -32,6 +46,7 @@ static void		write_column(t_all *all, t_pts_dist dist, int x, int color)
 	double	cam_proj_dist;
 	int		corner_size;
 	int		j;
+	int		index;
 
 	cam_proj_dist = round((all->mlx->win_size.x / 2) /
 			all->precomputed->tan[(int)(30 / all->index_divide)]);
@@ -39,28 +54,23 @@ static void		write_column(t_all *all, t_pts_dist dist, int x, int color)
 	col_len = (col_len / 2) * 2;
 	corner_size = (all->mlx->win_size.y - col_len) / 2;
 	j = 0;
+	index = color;
 	while (j < corner_size)
 		write_img(x, j++, all->img, (int)0x00DBAE63);
 	while (j < ((all->mlx->win_size.y - corner_size > all->mlx->win_size.y) ?
 				all->mlx->win_size.y : (all->mlx->win_size.y - corner_size)))
 	{
-		color = ((j - corner_size) * 100) / col_len;
-		color = (BLOCK_SIZE * color) / 100;
-		color = all->texture->tab_bmp[(color * BLOCK_SIZE)
-			+ ((int)(dist.pt.x) % BLOCK_SIZE)];
+		if (!all->options.texture_problem && all->options.enable_texture)
+		{
+			color = ((j - corner_size) * 100) / col_len;
+			color = (BLOCK_SIZE * color) / 100;
+			color = all->texture[index]->tab_bmp[(color * BLOCK_SIZE)
+				+ ((int)(dist.pt.x) % BLOCK_SIZE)];
+		}
 		write_img(x, j++, all->img, color);
 	}
 	while (j < all->mlx->win_size.y)
 		write_img(x, j++, all->img, (int)0x0051C228);
-}
-
-double			angle_beta(double angle, t_player *player)
-{
-	if (player->angle < 29 && angle >= 329)
-		return (angle - (player->angle + 360));
-	if (player->angle > 329 && angle < 29)
-		angle += 360;
-	return (angle - (double)player->angle);
 }
 
 void			print_wall_to_img(t_all *all)
@@ -86,7 +96,8 @@ void			print_wall_to_img(t_all *all)
 		res.dist *= all->precomputed->cos[(int)fabs(angle_beta(
 					d_angle, all->player) / all->index_divide)];
 		write_column(all, res, all->mlx->win_size.x - nb_col,
-					choose_color(d_angle, wall_direction));
+					((!all->options.texture_problem && all->options.enable_texture)
+					 ? choose_index(d_angle, wall_direction) : choose_color(d_angle, wall_direction)));
 		nb_col--;
 	}
 }

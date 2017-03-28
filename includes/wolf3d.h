@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/27 14:27:04 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/28 13:55:49 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,12 @@ typedef struct	s_pts_dist
 	double			dist;
 }				t_pts_dist;
 
+typedef struct	s_options
+{
+	short		texture_problem;
+	short		enable_texture;
+}				t_options;
+
 typedef struct	s_all
 {
 	t_mlx			*mlx;
@@ -94,7 +100,8 @@ typedef struct	s_all
 	t_map			map;
 	t_precompute	*precomputed;
 	double			index_divide;
-	t_bmp_img		*texture;
+	t_bmp_img		*texture[4];
+	t_options		options;
 }				t_all;
 
 t_mlx_img		*new_image(void *mlx, int x, int y);
@@ -109,7 +116,7 @@ double			angle_beta(double angle, t_player *player);
 void			move(int keycode, t_all *param);
 void			init_precompute(t_all *all);
 void			exit_properly(t_all *param);
-int				close_event(void *param);
+int				close_event(t_all *param);
 t_bmp_img		*read_bmp(char *file);
 int				auto_refresh_function(t_all *param);
 
