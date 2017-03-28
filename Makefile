@@ -6,7 +6,7 @@
 #    By: mdugot <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 12:08:51 by mdugot            #+#    #+#              #
-#    Updated: 2017/03/21 14:03:10 by cdrouet          ###   ########.fr        #
+#    Updated: 2017/03/28 11:29:41 by cdrouet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -51,6 +51,7 @@ $(LIB):
 $(MLX):
 	make -C $(MLX_PATH)
 
+.PHONY: mlx
 mlx:
 	make re -C $(MLX_PATH)
 
@@ -67,6 +68,7 @@ clean:
 	rm -fv $(OBJ)
 	@rm -rf $(OBJ_PATH)
 	make $@ -C $(LIB_PATH)
+	make $@ -C $(MLX_PATH)
 
 .PHONY: fclean
 fclean: clean
