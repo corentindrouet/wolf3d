@@ -6,19 +6,11 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/03/02 08:12:05 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/27 14:28:24 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/28 10:04:10 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf3d.h"
-
-int					verif_wall(int x, int y, t_map *map)
-{
-	if (y >= (int)map->size.y || y < 0 ||
-			x >= (int)map->size.x || x < 0)
-		return (0);
-	return (map->map[y / BLOCK_SIZE][x / BLOCK_SIZE] - '0');
-}
 
 static t_double_pts	horizontal_search(t_all *all, double angle)
 {
@@ -89,6 +81,19 @@ static t_double_pts	search_pt(double *p, t_all *all, double angle,
 	return (pt);
 }
 
+static void			adjust_values(t_pts_dist *a, t_pts_dist *b, double angle)
+{
+	b->pt.x += b->pt.y;
+	b->pt.y = b->pt.x - b->pt.y;
+	b->pt.x = b->pt.x - b->pt.y;
+	if (angle >= 90 && angle < 270)
+		b->pt.x = (((int)b->pt.x / BLOCK_SIZE) * BLOCK_SIZE)
+			+ (BLOCK_SIZE - ((int)b->pt.x % BLOCK_SIZE));
+	if (angle >= 180)
+		a->pt.x = (((int)a->pt.x / BLOCK_SIZE) * BLOCK_SIZE)
+			+ (BLOCK_SIZE - ((int)a->pt.x % BLOCK_SIZE));
+}
+
 t_pts_dist			search_pts_in_space(t_all *all, double angle)
 {
 	t_pts_dist	a;
@@ -100,9 +105,7 @@ t_pts_dist			search_pts_in_space(t_all *all, double angle)
 		a.pt = search_pt(&(a.dist), all, angle, horizontal_search);
 	if (angle != 270 && angle != 90)
 		b.pt = search_pt(&(b.dist), all, angle, vertical_search);
-	b.pt.x += b.pt.y;
-	b.pt.y = b.pt.x - b.pt.y;
-	b.pt.x = b.pt.x - b.pt.y;
+	adjust_values(&a, &b, angle);
 	if (angle == 180 || angle == 0 || a.pt.x < 0 || a.pt.y < 0
 			|| a.pt.x >= (double)all->map.size.x
 			|| a.pt.y >= (double)all->map.size.y

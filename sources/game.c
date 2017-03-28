@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 12:48:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/21 09:31:56 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/28 10:04:50 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,14 @@ static void	init_player(char **map, t_player *player)
 	player->extend.y = 0;
 	*tmp = '0';
 	player->angle = 0;
+}
+
+int			verif_wall(int x, int y, t_map *map)
+{
+	if (y >= (int)map->size.y || y < 0 ||
+			x >= (int)map->size.x || x < 0)
+		return (0);
+	return (map->map[y / BLOCK_SIZE][x / BLOCK_SIZE] - '0');
 }
 
 int			tab_len(char **tab)
