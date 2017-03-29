@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 12:48:39 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/28 11:48:56 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/29 12:52:00 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ int			tab_len(char **tab)
 	return (i);
 }
 
-double			angle_beta(double angle, t_player *player)
+double		angle_beta(double angle, t_player *player)
 {
 	if (player->angle < 29 && angle >= 329)
 		return (angle - (player->angle + 360));

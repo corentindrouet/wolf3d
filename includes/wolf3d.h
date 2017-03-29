@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 13:18:36 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/28 13:55:49 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/29 13:28:02 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,5 +119,7 @@ void			exit_properly(t_all *param);
 int				close_event(t_all *param);
 t_bmp_img		*read_bmp(char *file);
 int				auto_refresh_function(t_all *param);
+double			calcul_angle(t_all *all, double angle, int nb_col);
+int				index_map(int col_len, int corner_size, t_pts_dist dist, int j);
 
 #endif

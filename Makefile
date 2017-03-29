@@ -6,17 +6,18 @@
 #    By: mdugot <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 12:08:51 by mdugot            #+#    #+#              #
-#    Updated: 2017/03/28 11:29:41 by cdrouet          ###   ########.fr        #
+#    Updated: 2017/03/29 13:18:58 by cdrouet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME= wolf3d
+NAME=wolf3d
 CC= clang
 CFLAGS= -Wall -Werror -Wextra
 SRC_NAME= main.c \
 		  mlx_img_manager.c \
 		  game.c \
 		  raycasting.c \
+		  raycasting2.c \
 		  search_pt_segment.c \
 		  event.c \
 		  precalculing.c \
@@ -24,56 +25,84 @@ SRC_NAME= main.c \
 		  read_bitmap.c
 SRC_PATH= ./sources/
 INC_PATH= ./includes/
-LIB_NAME= libft_printf.a
+LIB_NAME= libftprintf.a
 LIB_ID= ftprintf
 LIB_PATH= ./libft/
 LIB_INC= ./libft/
-MLX_PATH= ./mlx/
-MLX_INC= ./mlx/
+VERSION= $(shell sw_vers -productVersion | sed 's/\./ /g' | awk '{print$$2}')
+ifeq ($(VERSION), 11)
+  INFO= El Captain
+  MLX_PATH= ./mlx/
+  MLX_INC= ./mlx/
+else
+  INFO= Sierra
+  MLX_PATH= ./mlx_sierra/
+  MLX_INC= ./mlx_sierra/
+endif
 MLX_ID= mlx
+MLX_NAME= libmlx.a
 MLX_FLAG= -framework OpenGL -framework AppKit
 OBJ_NAME= $(SRC_NAME:.c=.o)
 OBJ_PATH= ./obj/
 SRC= $(addprefix $(SRC_PATH), $(SRC_NAME))
 OBJ= $(addprefix $(OBJ_PATH), $(OBJ_NAME))
 LIB= $(addprefix $(LIB_PATH), $(LIB_NAME))
-MLX= $(addprefix $(MLX_PATH), $(MLX_INC))
+MLX= $(addprefix $(MLX_PATH), $(MLX_NAME))
+
+$(NAME) : $(MLX) $(LIB) $(OBJ)
+	$(info Compiling executable...)
+	@$(CC) $(CFLAGS) -I$(INC_PATH) -o $(NAME) -L$(LIB_PATH) -l$(LIB_ID) -L$(MLX_PATH) -l$(MLX_ID) $(MLX_FLAG) $(OBJ)
+	$(info Done !)
 
 .PHONY: all
 all: $(NAME)
 
-$(NAME): $(MLX) $(LIB) $(OBJ)
-	$(CC) $(CFLAGS) -I$(INC_PATH) -o $(NAME)  -L$(LIB_PATH) -l$(LIB_ID) -L$(MLX_PATH) -l$(MLX_ID) $(MLX_FLAG) $(OBJ)
-
 $(LIB):
-	make -C $(LIB_PATH)
+	$(info Compiling libft)
+	@make -C $(LIB_PATH)
+	@echo ""
 
 $(MLX):
-	make -C $(MLX_PATH)
+	$(info Compiling mlx for Mac OS X $(INFO))
+	@make -C $(MLX_PATH)
+	@echo ""
 
 .PHONY: mlx
 mlx:
-	make re -C $(MLX_PATH)
+	@make re -C $(MLX_PATH)
 
 .PHONY: libft
 libft:
-	make re -C $(LIB_PATH)
+	@make re -C $(LIB_PATH)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@mkdir $(OBJ_PATH) 2> /dev/null || echo "" > /dev/null
-	$(CC) -I$(INC_PATH) -I$(LIB_INC) -I$(MLX_INC) $(CFLAGS) -o $@ -c $<
+	@/bin/echo -n "Compiling $<..."
+	@$(CC) -I$(INC_PATH) -I$(LIB_INC) -I$(MLX_INC) $(CFLAGS) -o $@ -c $<
+	@echo "Done !"
 
 .PHONY: clean
 clean:
-	rm -fv $(OBJ)
+	$(info Delete binaries)
+	@rm -f $(OBJ)
 	@rm -rf $(OBJ_PATH)
-	make $@ -C $(LIB_PATH)
-	make $@ -C $(MLX_PATH)
+	$(info Done !)
+	@echo ""
+	$(info Delete libft Binaries)
+	@make $@ -C $(LIB_PATH)
+	@echo ""
+	$(info Delete mlx Binaries)
+	@make $@ -C $(MLX_PATH)
+	@echo ""
 
 .PHONY: fclean
 fclean: clean
-	rm -fv $(NAME)
-	make $@ -C $(LIB_PATH)
+	$(info Delete executable)
+	@rm -f $(NAME)
+	$(info done !)
+	@echo ""
+	$(info Delete libft executable)
+	@make $@ -C $(LIB_PATH)
 
 .PHONY: re
 re: fclean all

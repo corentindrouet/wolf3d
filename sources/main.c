@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/28 14:02:51 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/29 13:32:32 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	concat(char *buff, char **str)
 		exit(0);
 }
 
-static char	**read_map(void)
+static char	**read_map(t_all *all_structs)
 {
 	int		fd;
 	char	buff[257];
@@ -64,7 +64,7 @@ static char	**read_map(void)
 	char	**splited;
 
 	buff[256] = '\0';
-	fd = open("map1.map", O_RDONLY);
+	fd = open("map.map", O_RDONLY);
 	if (fd < 0)
 		exit(0);
 	ret = 256;
@@ -77,6 +77,8 @@ static char	**read_map(void)
 	}
 	splited = ft_strsplit(str, '\n');
 	free(str);
+	all_structs->map.size.x = (double)(ft_strlen(splited[0]) * BLOCK_SIZE);
+	all_structs->map.size.y = (double)(tab_len(splited) * BLOCK_SIZE);
 	return (splited);
 }
 
@@ -92,11 +94,7 @@ int			main(void)
 	if (!all_structs.texture[0] || !all_structs.texture[1]
 			|| !all_structs.texture[2] || !all_structs.texture[3])
 		all_structs.options.texture_problem = 1;
-	all_structs.map.map = read_map();
-	all_structs.map.size.x = (double)(ft_strlen(all_structs.map.map[0])
-			* BLOCK_SIZE);
-	all_structs.map.size.y = (double)(tab_len(all_structs.map.map)
-			* BLOCK_SIZE);
+	all_structs.map.map = read_map(&all_structs);
 	if (!(all_structs.mlx = malloc(sizeof(t_mlx))))
 		exit(0);
 	init_mlx_window(all_structs.mlx);

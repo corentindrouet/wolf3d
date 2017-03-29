@@ -6,7 +6,7 @@
 #    By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/01/04 13:04:33 by cdrouet           #+#    #+#              #
-#    Updated: 2017/02/15 08:47:37 by cdrouet          ###   ########.fr        #
+#    Updated: 2017/03/29 11:39:04 by cdrouet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -118,17 +118,25 @@ SRC_PATH=./
 FLAG = -Wall -Wextra -Werror
 
 $(NAME) : $(BIN)
-	ar rc $(NAME) $(BIN) ; ranlib $(NAME)
+	$(info Done !)
+	$(info Compiling library...)
+	@ar rc $(NAME) $(BIN) ; ranlib $(NAME)
+	$(info Done !)
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	gcc -I./ $(FLAG) -o $@ -c $<
+	@/bin/echo -n "."
+	@gcc -I./ $(FLAG) -o $@ -c $<
 
 all : $(NAME)
 
 clean :
-	rm -f $(BIN)
+	$(info Cleaning binaries...)
+	@rm -f $(BIN)
+	$(info Done !)
 
 fclean : clean
-	rm -f $(NAME)
+	$(info Cleaning library...)
+	@rm -f $(NAME)
+	$(info Done !)
 
 re : fclean all
