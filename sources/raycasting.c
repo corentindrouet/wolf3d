@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/27 11:28:47 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/29 13:28:50 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/29 14:11:33 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,12 +96,4 @@ void			print_wall_to_img(t_all *all)
 					: choose_color(d_angle, wall_direction)));
 		nb_col--;
 	}
-}
-
-void			raycast(t_all *all_structs)
-{
-	all_structs->img = new_image(all_structs->mlx->mlx,
-			all_structs->mlx->win_size.x,
-			all_structs->mlx->win_size.y);
-	print_wall_to_img(all_structs);
 }
