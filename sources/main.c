@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/29 13:32:32 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/29 13:50:59 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,10 @@ int			main(void)
 {
 	t_all		all_structs;
 
-	all_structs.texture[0] = read_bmp("Wall.bmp");
-	all_structs.texture[1] = read_bmp("Wall2.bmp");
-	all_structs.texture[2] = read_bmp("Wall3.bmp");
-	all_structs.texture[3] = read_bmp("Wall4.bmp");
+	all_structs.texture[0] = read_bmp("img/Wall.bmp");
+	all_structs.texture[1] = read_bmp("img/Wall2.bmp");
+	all_structs.texture[2] = read_bmp("img/Wall3.bmp");
+	all_structs.texture[3] = read_bmp("img/Wall4.bmp");
 	all_structs.options.texture_problem = 0;
 	if (!all_structs.texture[0] || !all_structs.texture[1]
 			|| !all_structs.texture[2] || !all_structs.texture[3])
