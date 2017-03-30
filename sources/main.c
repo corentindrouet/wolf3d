@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/30 09:14:33 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/30 10:25:39 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,52 +36,6 @@ static void	init_mlx_window(t_mlx *game)
 		free(game->mlx);
 		exit(0);
 	}
-}
-
-static void	concat(char *buff, char **str)
-{
-	char	*tmp;
-
-	tmp = NULL;
-	if (!(*str))
-		*str = ft_strjoin(buff, "");
-	else
-	{
-		tmp = ft_strjoin(*str, buff);
-		free(*str);
-		*str = tmp;
-	}
-	if (!(*str))
-		exit(0);
-}
-
-static char	**read_map(t_all *all_structs)
-{
-	int		fd;
-	char	buff[257];
-	int		ret;
-	char	*str;
-	char	**splited;
-
-	buff[256] = '\0';
-	fd = open("map.map", O_RDONLY);
-	if (fd < 0)
-		exit(0);
-	ret = 256;
-	str = NULL;
-	while (ret == 256)
-	{
-		ft_bzero(buff, 256);
-		if ((ret = read(fd, buff, 256)) >= 0)
-			concat(buff, &str);
-	}
-	splited = ft_strsplit(str, '\n');
-	free(str);
-	if (!check_valid_map(splited))
-		exit(0);
-	all_structs->map.size.x = (double)(ft_strlen(splited[0]) * BLOCK_SIZE);
-	all_structs->map.size.y = (double)(tab_len(splited) * BLOCK_SIZE);
-	return (splited);
 }
 
 int			main(void)
