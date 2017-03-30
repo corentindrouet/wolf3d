@@ -6,7 +6,7 @@
 #    By: mdugot <marvin@42.fr>                      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/03 12:08:51 by mdugot            #+#    #+#              #
-#    Updated: 2017/03/29 13:18:58 by cdrouet          ###   ########.fr        #
+#    Updated: 2017/03/30 09:15:18 by cdrouet          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ SRC_NAME= main.c \
 		  event.c \
 		  precalculing.c \
 		  close_event.c \
-		  read_bitmap.c
+		  read_bitmap.c \
+		  check_map.c
 SRC_PATH= ./sources/
 INC_PATH= ./includes/
 LIB_NAME= libftprintf.a

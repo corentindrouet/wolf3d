@@ -6,7 +6,7 @@
 /*   By: cdrouet <cdrouet@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/02/23 11:22:20 by cdrouet           #+#    #+#             */
-/*   Updated: 2017/03/29 13:50:59 by cdrouet          ###   ########.fr       */
+/*   Updated: 2017/03/30 09:14:33 by cdrouet          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ static void	init_mlx_window(t_mlx *game)
 	game->mlx = mlx_init();
 	if (!game->mlx)
 		exit(0);
-	game->win_size.x = 640;
-	game->win_size.y = 400;
+	game->win_size.x = 960;
+	game->win_size.y = 600;
 	game->win = mlx_new_window(game->mlx, game->win_size.x,
 			game->win_size.y, "wolf3d");
 	if (!game->win)
@@ -77,6 +77,8 @@ static char	**read_map(t_all *all_structs)
 	}
 	splited = ft_strsplit(str, '\n');
 	free(str);
+	if (!check_valid_map(splited))
+		exit(0);
 	all_structs->map.size.x = (double)(ft_strlen(splited[0]) * BLOCK_SIZE);
 	all_structs->map.size.y = (double)(tab_len(splited) * BLOCK_SIZE);
 	return (splited);
